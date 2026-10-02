@@ -39,11 +39,13 @@ Ao atualizar experiências ou contato, revise os textos nos dois idiomas em `app
 
 ## Hospedagem
 
-Publique o conteúdo de `dist/` em uma hospedagem estática. O endereço atual do site é:
+O site é hospedado no GitHub Pages e está disponível em:
 
-<https://tedsp-thalyson-emanuel.thalysonemanuels-p.chatgpt.site/>
+<https://tedsptech.com/>
 
-O acesso ao site depende das configurações da hospedagem. Este repositório mantém uma cópia do código; alterações aqui precisam ser publicadas na hospedagem para aparecerem no site.
+O workflow `.github/workflows/pages.yml` publica o conteúdo de `dist/` automaticamente após cada push para `main`. Também é possível iniciar a publicação manualmente pela aba Actions, no workflow “Publish portfolio to GitHub Pages”.
+
+O domínio personalizado é configurado em Settings → Pages. Os registros DNS são gerenciados na Hostinger.
 
 ## Autoria
 
