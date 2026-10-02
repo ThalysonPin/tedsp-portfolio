@@ -11,7 +11,7 @@
 @media(max-width:380px){h1{font-size:56px}.hero .eyebrow{font-size:9px}.hero-meta{flex-direction:column;gap:6px}.hero-meta span+span::before{display:none}.metrics strong{font-size:35px}.metrics p{font-size:11px}.portrait-block{grid-template-columns:120px;gap:16px}.portrait-frame{height:150px}.hero-actions{gap:10px}.hero-actions .button{padding-inline:14px}}
 /* Project documentation synchronized from GitHub issues. */
 [hidden]{display:none!important}
-.issue-projects{margin-top:58px;border-top:1px solid var(--line);padding-top:42px}
+.issue-projects{margin-top:0;padding-bottom:58px}
 .issue-section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:28px}
 .issue-section-heading .eyebrow{font-size:11px;margin-bottom:12px}
 .issue-section-heading h3{font-size:35px;letter-spacing:-1.2px;font-weight:550}
@@ -54,4 +54,4 @@
 .issue-document blockquote{border-left:3px solid var(--green);padding-left:18px;margin-inline:0}
 .issue-source-rail{margin-top:30px;padding-top:20px;border-top:1px solid var(--line)}
 @media(max-width:760px){#issue-dialog .dialog-top{top:-24px}}
-@media(max-width:760px){.issue-projects{margin-top:40px;padding-top:30px}.issue-section-heading{flex-direction:column;align-items:flex-start;gap:18px}.issue-section-heading h3{font-size:30px}.issue-card{grid-template-columns:1fr}.issue-cover{padding:18px}.issue-cover img{max-height:340px}.issue-card-body{padding:24px}.issue-card h4{font-size:24px}.issue-card-body>p{font-size:16px}#issue-dialog{padding:24px}#issue-title{font-size:27px}.issue-document{font-size:15px}.issue-document h3{font-size:22px}.issue-document h4{font-size:18px}}
+@media(max-width:760px){.issue-projects{padding-bottom:40px}.issue-section-heading{flex-direction:column;align-items:flex-start;gap:18px}.issue-section-heading h3{font-size:30px}.issue-card{grid-template-columns:1fr}.issue-cover{padding:18px}.issue-cover img{max-height:340px}.issue-card-body{padding:24px}.issue-card h4{font-size:24px}.issue-card-body>p{font-size:16px}#issue-dialog{padding:24px}#issue-title{font-size:27px}.issue-document{font-size:15px}.issue-document h3{font-size:22px}.issue-document h4{font-size:18px}}
