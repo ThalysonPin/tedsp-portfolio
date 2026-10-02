@@ -9,3 +9,49 @@
 @media(max-width:1100px){.header-controls{gap:22px}.header nav{gap:19px}.header nav a{font-size:13px}.language{padding-left:18px}.metrics>div{flex-direction:column;align-items:flex-start}.metrics p{font-size:13px}.hero-actions{gap:14px}.project h3{font-size:25px}.skill-group h3{font-size:18px}.contact-inner{gap:32px}.contact-email{font-size:21px}}
 @media(max-width:760px){.header-controls{gap:16px}.menu-button{display:block;padding:8px 0;background:none;border:0;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}.header-inner{position:relative}.header nav{display:none;position:absolute;top:calc(100% - 1px);left:calc(-1 * var(--gutter));right:calc(-1 * var(--gutter));padding:16px var(--gutter) 24px;background:var(--paper);border-bottom:1px solid var(--line);z-index:10;flex-direction:column;align-items:stretch;gap:0;box-shadow:0 10px 20px #1e372214}.header nav.is-open{display:flex}.header nav a{font-size:16px;padding:12px 0}.language{padding-left:15px}.hero-actions .button{font-size:13px}.metrics p{font-size:12px}.hero-meta{font-size:12px}#project-list{grid-template-columns:1fr;gap:22px}.project.featured{grid-template-columns:1fr}.project.featured .project-visual{min-height:290px}.project-visual{min-height:240px;padding:29px 25px}.project-body{padding:25px}.project h3{font-size:25px}.project-body p{font-size:16px}.github-rail{align-items:flex-start;flex-direction:column;gap:10px}.skill-grid{grid-template-columns:1fr}.skill-group{padding:24px 0}.skill-group+article{border-left:none;border-top:1px solid var(--line);padding-left:0}.skill-group h3{font-size:20px;margin-top:10px}.skill-items{margin-top:18px;gap:9px 20px}.education{grid-template-columns:1fr;gap:32px;margin-top:32px}.education p{font-size:15px}.contact-inner{grid-template-columns:1fr;gap:30px;padding-block:50px}.contact-inner h2{font-size:54px}.contact-links{justify-self:start}.contact-email{font-size:clamp(17px,4.5vw,23px)}.contact-social{gap:24px}.footer{flex-direction:row;flex-wrap:wrap;font-size:12px}dialog{padding:24px}#case-title{font-size:29px}.dialog-top{margin-bottom:20px}.case-sections p{font-size:15px}}
 @media(max-width:380px){h1{font-size:56px}.hero .eyebrow{font-size:9px}.hero-meta{flex-direction:column;gap:6px}.hero-meta span+span::before{display:none}.metrics strong{font-size:35px}.metrics p{font-size:11px}.portrait-block{grid-template-columns:120px;gap:16px}.portrait-frame{height:150px}.hero-actions{gap:10px}.hero-actions .button{padding-inline:14px}}
+/* Project documentation synchronized from GitHub issues. */
+[hidden]{display:none!important}
+.issue-projects{margin-top:58px;border-top:1px solid var(--line);padding-top:42px}
+.issue-section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:28px}
+.issue-section-heading .eyebrow{font-size:11px;margin-bottom:12px}
+.issue-section-heading h3{font-size:35px;letter-spacing:-1.2px;font-weight:550}
+.issue-section-heading>p{max-width:355px;font-size:15px;color:var(--muted)}
+#issue-project-list{display:grid;gap:24px}
+.issue-card{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);background:var(--white);border:1px solid var(--line);overflow:hidden}
+.issue-cover{display:flex;align-items:center;justify-content:center;background:#e4ebe3;min-width:0;padding:24px}
+.issue-cover img{display:block;width:100%;height:auto;max-height:430px;object-fit:contain}
+.issue-cover-text{flex-direction:column;align-items:flex-start;gap:12px;min-height:260px;color:var(--green)}
+.issue-cover-text>span:first-child{font-size:15px;font-weight:600;letter-spacing:1px}
+.issue-cover-text>span+span{font-size:80px;font-weight:500;letter-spacing:-5px}
+.issue-card-body{padding:32px;display:flex;flex-direction:column;min-width:0}
+.issue-meta{display:flex;flex-direction:column;gap:9px;margin-bottom:20px}
+.issue-meta .eyebrow{font-size:10px;letter-spacing:1.3px}
+.issue-meta>span+span{font-size:12px;color:var(--muted)}
+.issue-card h4{font-size:27px;line-height:1.22;font-weight:550;letter-spacing:-.8px;margin:0}
+.issue-card-body>p{color:var(--muted);line-height:1.8;font-size:15px;margin-top:16px}
+.issue-card .case-button{margin-top:auto;padding-top:18px;min-height:50px}
+.issue-card-body>p+.case-button,.issue-card-body>.tags+.case-button{margin-top:25px}
+#issue-dialog{width:min(1050px,calc(100% - 32px));padding:36px}
+#issue-dialog .dialog-top{position:sticky;top:-36px;background:var(--paper);padding:12px 0;margin-top:-12px;z-index:1}
+#issue-title{font-size:34px;letter-spacing:-1px;line-height:1.2;max-width:880px;overflow-wrap:anywhere}
+.issue-language-note{margin-top:16px;color:var(--muted);font-size:13px}
+.issue-document{margin-top:30px;color:var(--muted);font-size:16px;line-height:1.8;overflow-wrap:anywhere}
+.issue-document h3,.issue-document h4,.issue-document h5,.issue-document h6{color:var(--ink);line-height:1.35;margin:30px 0 14px;letter-spacing:-.4px}
+.issue-document h3{font-size:25px;border-top:1px solid var(--line);padding-top:25px}
+.issue-document h4{font-size:20px}
+.issue-document h5,.issue-document h6{font-size:18px}
+.issue-document p{margin:14px 0}
+.issue-document ul,.issue-document ol{padding-left:24px;margin:14px 0}
+.issue-document li{padding-left:3px;margin:6px 0}
+.issue-document a{text-decoration:underline;text-underline-offset:3px;color:var(--green)}
+.issue-document a:has(img){display:block;cursor:zoom-in}
+.issue-document img{display:block;max-width:100%;height:auto;margin:20px auto;border:1px solid var(--line);background:white}
+.issue-document table{display:block;overflow-x:auto;border-collapse:collapse;margin:22px 0;font-size:14px}
+.issue-document th,.issue-document td{border:1px solid var(--line);padding:10px 13px;text-align:left;min-width:100px}
+.issue-document th{color:var(--ink);background:var(--light);font-weight:600}
+.issue-document pre{padding:18px;background:var(--light);overflow-x:auto;font-size:13px}
+.issue-document code{font-size:.9em}
+.issue-document blockquote{border-left:3px solid var(--green);padding-left:18px;margin-inline:0}
+.issue-source-rail{margin-top:30px;padding-top:20px;border-top:1px solid var(--line)}
+@media(max-width:760px){#issue-dialog .dialog-top{top:-24px}}
+@media(max-width:760px){.issue-projects{margin-top:40px;padding-top:30px}.issue-section-heading{flex-direction:column;align-items:flex-start;gap:18px}.issue-section-heading h3{font-size:30px}.issue-card{grid-template-columns:1fr}.issue-cover{padding:18px}.issue-cover img{max-height:340px}.issue-card-body{padding:24px}.issue-card h4{font-size:24px}.issue-card-body>p{font-size:16px}#issue-dialog{padding:24px}#issue-title{font-size:27px}.issue-document{font-size:15px}.issue-document h3{font-size:22px}.issue-document h4{font-size:18px}}

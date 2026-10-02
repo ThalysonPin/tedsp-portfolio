@@ -1,6 +1,6 @@
 const text = {
-pt:{skip:'Pular para o conteúdo',menu:'Menu',navExperience:'Experiência',navProjects:'Projetos',navSkills:'Competências',navContact:'Contato',heroEyebrow:'IA APLICADA · AUTOMAÇÃO · DESENVOLVIMENTO',heroRole:'Desenvolvedor de IA e Automação',heroIntro:'Conecto sistemas, automatizo processos e desenvolvo agentes de IA para operações de atendimento, marketing e vendas.',download:'Baixar currículo',viewProjects:'Ver projetos',location:'Brasil · Trabalho remoto',english:'Inglês intermediário · B1',metric1:'workflows desenvolvidos<br>e mantidos',metric2:'clínicas com agentes<br>de pré-vendas com IA',metric3:'clientes atendidos<br>na consultoria Foltz',experienceLabel:'01 / EXPERIÊNCIA',experienceTitle:'Experiência<br><em>profissional</em>',experienceIntro:'Desenvolvimento, integrações e automações do diagnóstico à manutenção em produção.',projectsLabel:'02 / PROJETOS',projectsTitle:'Projetos de IA<br>e <em>automação</em>',projectsIntro:'Estudos de caso de projetos para operações comerciais e clínicas médicas.',githubIntro:'Outros projetos e experiências de desenvolvimento no GitHub.',githubLink:'Conhecer meu GitHub',skillsLabel:'03 / COMPETÊNCIAS',skillsTitle:'Competências<br><em>técnicas</em>',skillsIntro:'Automação visual e código para integrar ferramentas, construir interfaces e aplicar IA aos processos.',educationLabel:'FORMAÇÃO EM ANDAMENTO',educationTitle:'Análise e Desenvolvimento de Sistemas',educationSchool:'UNIGRAN · Centro Universitário da Grande Dourados',languageLabel:'COMUNICAÇÃO',languageTitle:'Português e inglês',languageDescription:'Português nativo · Inglês intermediário (B1)<br>Certificado EF SET',contactLabel:'04 / CONTATO',contactTitle:'<em>Contato</em>',contactIntro:'Tenho interesse em oportunidades remotas com IA aplicada, automação e desenvolvimento de software.',copyEmail:'Copiar e-mail',copied:'E-mail copiado.',copyFailed:'Selecione o endereço de e-mail acima para copiá-lo.',footerResume:'Currículo em PDF',backToTop:'Voltar ao início',caseLabel:'ESTUDO DE CASO',readCase:'Ler estudo de caso',flowLabel:'FLUXO RESUMIDO',context:'O problema',role:'Minha contribuição',solution:'A solução',result:'Resultado',today:'ATUAL',moreCareer:'Outras experiências',hideCareer:'Recolher experiências',metaDescription:'Thalyson Emanuel: desenvolvimento de IA aplicada, automações com n8n e integração de sistemas. Experiência, projetos e contato.'},
-en:{skip:'Skip to content',menu:'Menu',navExperience:'Experience',navProjects:'Projects',navSkills:'Skills',navContact:'Contact',heroEyebrow:'APPLIED AI · AUTOMATION · DEVELOPMENT',heroRole:'AI & Automation Developer',heroIntro:'I connect systems, automate processes, and build AI agents for customer service, marketing, and sales operations.',download:'Download CV',viewProjects:'View projects',location:'Brazil · Remote work',english:'Intermediate English · B1',metric1:'workflows developed<br>and maintained',metric2:'clinics supported by<br>AI presales agents',metric3:'clients supported<br>through Foltz consulting',experienceLabel:'01 / EXPERIENCE',experienceTitle:'Professional<br><em>experience</em>',experienceIntro:'Development, integrations, and automation from process discovery to production maintenance.',projectsLabel:'02 / PROJECTS',projectsTitle:'AI & automation<br><em>projects</em>',projectsIntro:'Case studies of projects for sales operations and medical clinics.',githubIntro:'More projects and development work on GitHub.',githubLink:'Explore my GitHub',skillsLabel:'03 / TECHNICAL SKILLS',skillsTitle:'Technical<br><em>skills</em>',skillsIntro:'Visual automation and code to connect tools, build interfaces, and apply AI to business processes.',educationLabel:'EDUCATION IN PROGRESS',educationTitle:'Systems Analysis and Development',educationSchool:'UNIGRAN · Centro Universitário da Grande Dourados',languageLabel:'COMMUNICATION',languageTitle:'Portuguese and English',languageDescription:'Native Portuguese · Intermediate English (B1)<br>EF SET certificate',contactLabel:'04 / CONTACT',contactTitle:'<em>Contact</em>',contactIntro:'I’m interested in remote opportunities in applied AI, automation, and software development.',copyEmail:'Copy email',copied:'Email copied.',copyFailed:'Select the email address above to copy it.',footerResume:'PDF CV',backToTop:'Back to top',caseLabel:'CASE STUDY',readCase:'Read case study',flowLabel:'WORKFLOW OVERVIEW',context:'The problem',role:'My contribution',solution:'The solution',result:'Outcome',today:'PRESENT',moreCareer:'Earlier experience',hideCareer:'Collapse experience',metaDescription:'Thalyson Emanuel: applied AI development, n8n automation, and system integrations. Experience, projects, and contact.'}
+pt:{issuesEyebrow:"DOCUMENTAÇÃO DE PROJETOS",issuesTitle:"Projetos no <em>GitHub</em>",issuesIntro:"Arquitetura, integrações e detalhes de implementação dos meus projetos.",issueRead:"Ler documentação",issueUpdated:"Atualizado em",issueDocument:"DOCUMENTAÇÃO",issueSource:"Fonte no GitHub",issueClose:"Fechar documentação",issueLanguageNote:"Conteúdo no idioma original da documentação.",issueImages:"Imagens do projeto",skip:'Pular para o conteúdo',menu:'Menu',navExperience:'Experiência',navProjects:'Projetos',navSkills:'Competências',navContact:'Contato',heroEyebrow:'IA APLICADA · AUTOMAÇÃO · DESENVOLVIMENTO',heroRole:'Desenvolvedor de IA e Automação',heroIntro:'Conecto sistemas, automatizo processos e desenvolvo agentes de IA para operações de atendimento, marketing e vendas.',download:'Baixar currículo',viewProjects:'Ver projetos',location:'Brasil · Trabalho remoto',english:'Inglês intermediário · B1',metric1:'workflows desenvolvidos<br>e mantidos',metric2:'clínicas com agentes<br>de pré-vendas com IA',metric3:'clientes atendidos<br>na consultoria Foltz',experienceLabel:'01 / EXPERIÊNCIA',experienceTitle:'Experiência<br><em>profissional</em>',experienceIntro:'Desenvolvimento, integrações e automações do diagnóstico à manutenção em produção.',projectsLabel:'02 / PROJETOS',projectsTitle:'Projetos de IA<br>e <em>automação</em>',projectsIntro:'Estudos de caso de projetos para operações comerciais e clínicas médicas.',githubIntro:'Outros projetos e experiências de desenvolvimento no GitHub.',githubLink:'Conhecer meu GitHub',skillsLabel:'03 / COMPETÊNCIAS',skillsTitle:'Competências<br><em>técnicas</em>',skillsIntro:'Automação visual e código para integrar ferramentas, construir interfaces e aplicar IA aos processos.',educationLabel:'FORMAÇÃO EM ANDAMENTO',educationTitle:'Análise e Desenvolvimento de Sistemas',educationSchool:'UNIGRAN · Centro Universitário da Grande Dourados',languageLabel:'COMUNICAÇÃO',languageTitle:'Português e inglês',languageDescription:'Português nativo · Inglês intermediário (B1)<br>Certificado EF SET',contactLabel:'04 / CONTATO',contactTitle:'<em>Contato</em>',contactIntro:'Tenho interesse em oportunidades remotas com IA aplicada, automação e desenvolvimento de software.',copyEmail:'Copiar e-mail',copied:'E-mail copiado.',copyFailed:'Selecione o endereço de e-mail acima para copiá-lo.',footerResume:'Currículo em PDF',backToTop:'Voltar ao início',caseLabel:'ESTUDO DE CASO',readCase:'Ler estudo de caso',flowLabel:'FLUXO RESUMIDO',context:'O problema',role:'Minha contribuição',solution:'A solução',result:'Resultado',today:'ATUAL',moreCareer:'Outras experiências',hideCareer:'Recolher experiências',metaDescription:'Thalyson Emanuel: desenvolvimento de IA aplicada, automações com n8n e integração de sistemas. Experiência, projetos e contato.'},
+en:{issuesEyebrow:"PROJECT DOCUMENTATION",issuesTitle:"Projects on <em>GitHub</em>",issuesIntro:"Architecture, integrations, and implementation details of my projects.",issueRead:"Read documentation",issueUpdated:"Updated",issueDocument:"DOCUMENTATION",issueSource:"Source on GitHub",issueClose:"Close documentation",issueLanguageNote:"Content is shown in the documentation’s original language.",issueImages:"Project images",skip:'Skip to content',menu:'Menu',navExperience:'Experience',navProjects:'Projects',navSkills:'Skills',navContact:'Contact',heroEyebrow:'APPLIED AI · AUTOMATION · DEVELOPMENT',heroRole:'AI & Automation Developer',heroIntro:'I connect systems, automate processes, and build AI agents for customer service, marketing, and sales operations.',download:'Download CV',viewProjects:'View projects',location:'Brazil · Remote work',english:'Intermediate English · B1',metric1:'workflows developed<br>and maintained',metric2:'clinics supported by<br>AI presales agents',metric3:'clients supported<br>through Foltz consulting',experienceLabel:'01 / EXPERIENCE',experienceTitle:'Professional<br><em>experience</em>',experienceIntro:'Development, integrations, and automation from process discovery to production maintenance.',projectsLabel:'02 / PROJECTS',projectsTitle:'AI & automation<br><em>projects</em>',projectsIntro:'Case studies of projects for sales operations and medical clinics.',githubIntro:'More projects and development work on GitHub.',githubLink:'Explore my GitHub',skillsLabel:'03 / TECHNICAL SKILLS',skillsTitle:'Technical<br><em>skills</em>',skillsIntro:'Visual automation and code to connect tools, build interfaces, and apply AI to business processes.',educationLabel:'EDUCATION IN PROGRESS',educationTitle:'Systems Analysis and Development',educationSchool:'UNIGRAN · Centro Universitário da Grande Dourados',languageLabel:'COMMUNICATION',languageTitle:'Portuguese and English',languageDescription:'Native Portuguese · Intermediate English (B1)<br>EF SET certificate',contactLabel:'04 / CONTACT',contactTitle:'<em>Contact</em>',contactIntro:'I’m interested in remote opportunities in applied AI, automation, and software development.',copyEmail:'Copy email',copied:'Email copied.',copyFailed:'Select the email address above to copy it.',footerResume:'PDF CV',backToTop:'Back to top',caseLabel:'CASE STUDY',readCase:'Read case study',flowLabel:'WORKFLOW OVERVIEW',context:'The problem',role:'My contribution',solution:'The solution',result:'Outcome',today:'PRESENT',moreCareer:'Earlier experience',hideCareer:'Collapse experience',metaDescription:'Thalyson Emanuel: applied AI development, n8n automation, and system integrations. Experience, projects, and contact.'}
 };
 const jobs = [
 {company:'B2Med',date:{pt:'MAR 2024 — ATUAL',en:'MAR 2024 — PRESENT'},title:{pt:'Automação e soluções de IA',en:'Automation & AI Solutions'},description:{pt:'Desenvolvimento e manutenção de mais de 300 workflows com n8n, Python e JavaScript. Atuação em agentes de pré-vendas para mais de 50 clínicas, integrações com CRMs e agendas e automações de processos internos.',en:'Developed and maintained 300+ workflows with n8n, Python, and JavaScript. Worked on AI presales agents for 50+ clinics, CRM and calendar integrations, and internal process automation.'},extra:{pt:'Também desenvolvi uma solução de conteúdo que reduziu o ciclo de produção de três dias para minutos.',en:'Also developed a content generation solution that reduced a three-day production cycle to minutes.'},tags:['n8n','Python','JavaScript','LLMs','APIs REST']},
@@ -29,11 +29,95 @@ function closeCase(){dialog.close();}
 document.getElementById('close-dialog').addEventListener('click',closeCase);
 dialog.addEventListener('close',()=>{document.body.classList.remove('dialog-open');document.querySelector(`[data-case="${dialog.dataset.projectId}"]`)?.focus();});
 dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeCase();}});
-function setLanguage(lang){language=lang;document.documentElement.lang=lang==='pt'?'pt-BR':'en';document.title=lang==='pt'?'Thalyson Emanuel — IA e Automação':'Thalyson Emanuel — AI & Automation';document.querySelector('meta[name="description"]').content=text[lang].metaDescription;document.querySelectorAll('[data-i18n]').forEach(node=>node.innerHTML=text[lang][node.dataset.i18n]);document.querySelectorAll('[data-lang]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.lang===lang)));document.querySelectorAll('.resume-link').forEach(link=>link.href=`curriculo-thalyson-${lang}.pdf`);document.getElementById('main-nav').setAttribute('aria-label',lang==='pt'?'Navegação principal':'Main navigation');document.getElementById('close-dialog').setAttribute('aria-label',lang==='pt'?'Fechar estudo de caso':'Close case study');document.querySelector('.metrics').setAttribute('aria-label',lang==='pt'?'Experiência em números':'Experience in numbers');document.getElementById('copy-status').textContent='';renderJobs();renderProjects();renderSkills();if(dialog.open)caseContent(dialog.dataset.projectId);try{localStorage.setItem('tedsp-language',lang);}catch{}}
+function setLanguage(lang){language=lang;document.documentElement.lang=lang==='pt'?'pt-BR':'en';document.title=lang==='pt'?'Thalyson Emanuel — IA e Automação':'Thalyson Emanuel — AI & Automation';document.querySelector('meta[name="description"]').content=text[lang].metaDescription;document.querySelectorAll('[data-i18n]').forEach(node=>node.innerHTML=text[lang][node.dataset.i18n]);document.querySelectorAll('[data-lang]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.lang===lang)));document.querySelectorAll('.resume-link').forEach(link=>link.href=`curriculo-thalyson-${lang}.pdf`);document.getElementById('main-nav').setAttribute('aria-label',lang==='pt'?'Navegação principal':'Main navigation');document.getElementById('close-dialog').setAttribute('aria-label',lang==='pt'?'Fechar estudo de caso':'Close case study');document.querySelector('.metrics').setAttribute('aria-label',lang==='pt'?'Experiência em números':'Experience in numbers');document.getElementById('copy-status').textContent='';renderJobs();renderProjects();renderSkills();renderIssueProjects();if(issueDialog.open)renderIssueContent(issueDialog.dataset.issueNumber);if(dialog.open)caseContent(dialog.dataset.projectId);try{localStorage.setItem('tedsp-language',lang);}catch{}}
 document.querySelectorAll('[data-lang]').forEach(button=>button.addEventListener('click',()=>setLanguage(button.dataset.lang)));
 const menuButton=document.querySelector('.menu-button');const nav=document.getElementById('main-nav');
 function closeMenu(){menuButton.setAttribute('aria-expanded','false');nav.classList.remove('is-open');}
 menuButton.addEventListener('click',()=>{const open=menuButton.getAttribute('aria-expanded')!=='true';menuButton.setAttribute('aria-expanded',String(open));nav.classList.toggle('is-open',open);});
 nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('is-open')){closeMenu();menuButton.focus();}});
 document.getElementById('copy-email').addEventListener('click',async()=>{const status=document.getElementById('copy-status');try{await navigator.clipboard.writeText('thalyson_emanuels.p@hotmail.com');status.textContent=text[language].copied;}catch{const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(document.querySelector('.contact-email'));selection.removeAllRanges();selection.addRange(range);status.textContent=text[language].copyFailed;}});
+
+const issueFeed = window.PORTFOLIO_ISSUES || {projects:[]};
+const issueDialog = document.getElementById('issue-dialog');
+const issueProjects = Array.isArray(issueFeed.projects) ? issueFeed.projects : [];
+const escapeIssueText = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const issueDate = value => {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? '' : new Intl.DateTimeFormat(language === 'pt' ? 'pt-BR' : 'en', {day:'numeric', month:'short', year:'numeric',timeZone:'UTC'}).format(date);
+};
+const localIssueImage = value => typeof value === 'string' && /^issue-media\/[a-f0-9]{20}\.(png|jpg|gif|webp)$/.test(value);
+function renderIssueProjects() {
+  const section = document.getElementById('documentacao');
+  section.hidden = issueProjects.length === 0;
+  const list = document.getElementById('issue-project-list');
+  list.replaceChildren();
+  issueProjects.forEach(project => {
+    const card = document.createElement('article');
+    card.className = 'issue-card';
+    const images = (project.images || []).filter(localIssueImage);
+    const imageMarkup = images.length ? `<div class="issue-cover"><img src="${images[0]}" alt="" loading="lazy" decoding="async"></div>` : '<div class="issue-cover issue-cover-text" aria-hidden="true"><span>GitHub</span><span>#' + Number(project.number) + '</span></div>';
+    const date = issueDate(project.updatedAt);
+    card.innerHTML = imageMarkup + `<div class="issue-card-body"><div class="issue-meta"><span class="eyebrow">${text[language].issueDocument} / ${String(project.number).padStart(2,'0')}</span>${date ? `<span>${text[language].issueUpdated} ${date}</span>` : ''}</div><h4>${escapeIssueText(project.title)}</h4><p>${escapeIssueText(project.summary)}</p>${project.labels?.length ? '<div class="tags">' + project.labels.slice(0,5).map(label => '<span>' + escapeIssueText(label) + '</span>').join('') + '</div>' : ''}<button class="case-button" data-issue-number="${Number(project.number)}" aria-haspopup="dialog">${text[language].issueRead}<span class="case-plus" aria-hidden="true">+</span></button></div>`;
+    card.querySelector('button').addEventListener('click', () => openIssue(project.number));
+    list.append(card);
+  });
+}
+function renderIssueContent(number) {
+  const project = issueProjects.find(item => String(item.number) === String(number));
+  if (!project) return;
+  document.getElementById('issue-title').textContent = project.title;
+  // bodyHtml is sanitized at build time; issue prose is never evaluated as code.
+  document.getElementById('issue-document').innerHTML = project.bodyHtml;
+  document.querySelectorAll('#issue-document img').forEach(image => {
+    if (!localIssueImage(image.getAttribute('src'))) return;
+    let link = image.closest('a');
+    if (!link) {
+      link = document.createElement('a');
+      image.replaceWith(link);
+      link.append(image);
+    }
+    link.href = image.getAttribute('src');
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.setAttribute('aria-label', text[language].issueImages + ': ' + image.alt);
+  });
+  const source = document.getElementById('issue-source');
+  const expected = 'https://github.com/' + issueFeed.repository + '/issues/' + Number(project.number);
+  source.hidden = project.url !== expected;
+  if (!source.hidden) source.href = expected;
+  document.getElementById('close-issue-dialog').setAttribute('aria-label', text[language].issueClose);
+  document.getElementById('issue-language-note').hidden = language === 'pt';
+}
+function openIssue(number, updateHash = true) {
+  if (!issueProjects.some(item => String(item.number) === String(number))) return;
+  issueDialog.dataset.issueNumber = number;
+  renderIssueContent(number);
+  if (!issueDialog.open) {
+    issueDialog.showModal();
+    issueDialog.scrollTop = 0;
+    document.body.classList.add('dialog-open');
+    document.getElementById('close-issue-dialog').focus();
+  }
+  if (updateHash && location.hash !== '#github-issue-' + number) history.pushState(null, '', '#github-issue-' + number);
+}
+document.getElementById('close-issue-dialog').addEventListener('click', () => issueDialog.close());
+issueDialog.addEventListener('close', () => {
+  document.body.classList.remove('dialog-open');
+  if (/^#github-issue-\d+$/.test(location.hash)) history.replaceState(null, '', '#documentacao');
+  document.querySelector('[data-issue-number="' + issueDialog.dataset.issueNumber + '"]')?.focus();
+});
+issueDialog.addEventListener('click', event => {
+  if (event.target !== issueDialog) return;
+  const rect = issueDialog.getBoundingClientRect();
+  if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) issueDialog.close();
+});
+function handleIssueHash() {
+  const match = location.hash.match(/^#github-issue-(\d+)$/);
+  if (match) openIssue(match[1], false);
+  else if (issueDialog.open) issueDialog.close();
+}
+window.addEventListener('hashchange', handleIssueHash);
+window.addEventListener('popstate', handleIssueHash);
+
 let saved;try{saved=localStorage.getItem('tedsp-language');}catch{}setLanguage(saved==='en'?'en':'pt');
+handleIssueHash();
