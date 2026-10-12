@@ -35,7 +35,7 @@ const menuButton=document.querySelector('.menu-button');const nav=document.getEl
 function closeMenu(){menuButton.setAttribute('aria-expanded','false');nav.classList.remove('is-open');}
 menuButton.addEventListener('click',()=>{const open=menuButton.getAttribute('aria-expanded')!=='true';menuButton.setAttribute('aria-expanded',String(open));nav.classList.toggle('is-open',open);});
 nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('is-open')){closeMenu();menuButton.focus();}});
-document.getElementById('copy-email').addEventListener('click',async()=>{const status=document.getElementById('copy-status');try{await navigator.clipboard.writeText('thalyson_emanuels.p@hotmail.com');status.textContent=text[language].copied;}catch{const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(document.querySelector('.contact-email'));selection.removeAllRanges();selection.addRange(range);status.textContent=text[language].copyFailed;}});
+document.getElementById('copy-email').addEventListener('click',async()=>{const status=document.getElementById('copy-status');try{await navigator.clipboard.writeText('thalysonemanuels.p@gmail.com');status.textContent=text[language].copied;}catch{const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(document.querySelector('.contact-email'));selection.removeAllRanges();selection.addRange(range);status.textContent=text[language].copyFailed;}});
 
 const issueFeed = window.PORTFOLIO_ISSUES || {projects:[]};
 const issueDialog = document.getElementById('issue-dialog');
