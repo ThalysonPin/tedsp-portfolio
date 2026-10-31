@@ -29,7 +29,7 @@ function closeCase(){dialog.close();}
 document.getElementById('close-dialog').addEventListener('click',closeCase);
 dialog.addEventListener('close',()=>{document.body.classList.remove('dialog-open');document.querySelector(`[data-case="${dialog.dataset.projectId}"]`)?.focus();});
 dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeCase();}});
-function setLanguage(lang){language=lang;document.documentElement.lang=lang==='pt'?'pt-BR':'en';document.title=lang==='pt'?'Thalyson Emanuel — IA e Automação':'Thalyson Emanuel — AI & Automation';document.querySelector('meta[name="description"]').content=text[lang].metaDescription;document.querySelectorAll('[data-i18n]').forEach(node=>node.innerHTML=text[lang][node.dataset.i18n]);document.querySelectorAll('[data-lang]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.lang===lang)));document.querySelectorAll('.resume-link').forEach(link=>link.href=`curriculo-thalyson-${lang}.pdf`);document.getElementById('main-nav').setAttribute('aria-label',lang==='pt'?'Navegação principal':'Main navigation');document.getElementById('close-dialog').setAttribute('aria-label',lang==='pt'?'Fechar estudo de caso':'Close case study');document.querySelector('.metrics').setAttribute('aria-label',lang==='pt'?'Experiência em números':'Experience in numbers');document.getElementById('copy-status').textContent='';renderJobs();renderProjects();renderSkills();renderIssueProjects();if(issueDialog.open)renderIssueContent(issueDialog.dataset.issueNumber);if(dialog.open)caseContent(dialog.dataset.projectId);try{localStorage.setItem('tedsp-language',lang);}catch{}}
+function setLanguage(lang){language=lang;document.documentElement.lang=lang==='pt'?'pt-BR':'en';document.title=lang==='pt'?'Thalyson Emanuel — IA e Automação':'Thalyson Emanuel — AI & Automation';document.querySelector('meta[name="description"]').content=text[lang].metaDescription;document.querySelectorAll('[data-i18n]').forEach(node=>node.innerHTML=text[lang][node.dataset.i18n]);document.querySelectorAll('[data-lang]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.lang===lang)));document.querySelectorAll('.resume-link').forEach(link=>link.href=`curriculo-thalyson-${lang}.pdf`);document.getElementById('main-nav').setAttribute('aria-label',lang==='pt'?'Navegação principal':'Main navigation');document.getElementById('close-dialog').setAttribute('aria-label',lang==='pt'?'Fechar estudo de caso':'Close case study');document.querySelector('.metrics').setAttribute('aria-label',lang==='pt'?'Experiência em números':'Experience in numbers');document.getElementById('copy-status').textContent='';renderJobs();renderProjects();renderSkills();renderIssueProjects();updateThemeButton();if(issueDialog.open)renderIssueContent(issueDialog.dataset.issueNumber);if(dialog.open)caseContent(dialog.dataset.projectId);try{localStorage.setItem('tedsp-language',lang);}catch{}}
 document.querySelectorAll('[data-lang]').forEach(button=>button.addEventListener('click',()=>setLanguage(button.dataset.lang)));
 const menuButton=document.querySelector('.menu-button');const nav=document.getElementById('main-nav');
 function closeMenu(){menuButton.setAttribute('aria-expanded','false');nav.classList.remove('is-open');}
@@ -118,6 +118,24 @@ function handleIssueHash() {
 }
 window.addEventListener('hashchange', handleIssueHash);
 window.addEventListener('popstate', handleIssueHash);
+
+
+const themeToggle = document.getElementById('theme-toggle');
+function updateThemeButton() {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  const action = language === 'en' ? (dark ? 'Switch to light mode' : 'Switch to dark mode') : (dark ? 'Ativar modo claro' : 'Ativar modo escuro');
+  const label = language === 'en' ? 'Dark mode' : 'Modo escuro';
+  themeToggle.setAttribute('aria-pressed', String(dark));
+  themeToggle.setAttribute('aria-label', label);
+  themeToggle.title = action;
+  document.querySelector('meta[name="theme-color"]').content = dark ? '#080f1d' : '#f7f9fd';
+}
+themeToggle.addEventListener('click', () => {
+  const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = theme;
+  try { localStorage.setItem('tedsp-theme', theme); } catch {}
+  updateThemeButton();
+});
 
 let saved;try{saved=localStorage.getItem('tedsp-language');}catch{}setLanguage(saved==='en'?'en':'pt');
 handleIssueHash();
