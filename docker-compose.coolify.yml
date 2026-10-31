@@ -1,0 +1,23 @@
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile.coolify
+    restart: unless-stopped
+    expose:
+      - "80"
+    mem_limit: 128m
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      coolify-edge:
+        aliases:
+          - tedsp-portfolio
+
+networks:
+  coolify-edge:
+    name: coolify-edge
+    external: true

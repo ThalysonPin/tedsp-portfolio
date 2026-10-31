@@ -39,13 +39,17 @@ Ao atualizar experiências ou contato, revise os textos nos dois idiomas em `app
 
 ## Hospedagem
 
-O site é hospedado no GitHub Pages e está disponível em:
+O endereço de produção é <https://tedsptech.com/>, com DNS administrado na Hostinger.
 
-<https://tedsptech.com/>
+A publicação na VPS é gerenciada pelo Coolify e usa a branch `main`:
 
-O workflow `.github/workflows/pages.yml` publica o conteúdo de `dist/` automaticamente após cada push para `main`. Também é possível iniciar a publicação manualmente pela aba Actions, no workflow “Publish portfolio to GitHub Pages”.
+- `Dockerfile.coolify` executa os testes, sincroniza as issues públicas e suas imagens e prepara o servidor de arquivos estáticos.
+- `docker-compose.coolify.yml` conecta o site à rede externa `coolify-edge`, com o alias estável `tedsp-portfolio`, sem publicar portas adicionais na VPS.
+- No Coolify, o projeto usa o build pack Docker Compose, o arquivo `/docker-compose.coolify.yml` e o cache de build desativado para atualizar as issues a cada publicação.
 
-O domínio personalizado é configurado em Settings → Pages. Os registros DNS são gerenciados na Hostinger.
+Para colocar alterações no ar, faça o push para `main` e clique em **Deploy** na aplicação do Coolify. Uma nova publicação também atualiza a seção de projetos com o estado atual das issues. Os eventos de issues do GitHub Pages não iniciam automaticamente uma publicação no Coolify.
+
+O workflow `.github/workflows/pages.yml` continua disponível para publicar uma cópia no GitHub Pages. Ele recebe eventos de push, issues e execução manual.
 
 ## Projetos sincronizados das issues
 
@@ -54,7 +58,7 @@ A seção “Projetos no GitHub”, dentro de Projetos, publica **todas as issue
 Para incluir um projeto:
 
 1. Crie uma issue com título, descrição e imagens.
-2. Aguarde o workflow “Publish portfolio to GitHub Pages” concluir. Abrir ou editar a issue, adicionar ou remover uma etiqueta, fechar, reabrir, transferir ou excluir a issue inicia uma nova publicação.
+2. Clique em **Deploy** no Coolify para atualizar o site de produção. O workflow “Publish portfolio to GitHub Pages” atualiza a cópia do Pages quando uma issue é aberta, editada, etiquetada, fechada, reaberta, transferida ou excluída.
 
 Issues fechadas continuam visíveis. Excluir ou transferir uma issue para outro repositório a retira do site. Pull requests e comentários não entram na sincronização. O título, corpo, etiquetas, data de atualização e imagens de todas as issues são publicados no site público. Esta é a configuração solicitada pelo proprietário do repositório.
 
@@ -64,7 +68,7 @@ A sincronização aceita imagens PNG, JPEG, GIF e WebP hospedadas no GitHub, inc
 
 O corpo da documentação permanece no idioma em que a issue foi escrita. Os títulos e controles da interface acompanham a seleção PT/EN.
 
-Os arquivos `dist/issue-projects.js` e `dist/issue-media/` mantêm uma cópia inicial para a prévia local. No Actions, são regenerados antes da publicação; editar uma issue atualiza o site sem criar um commit automático na `main`.
+Os arquivos `dist/issue-projects.js` e `dist/issue-media/` mantêm uma cópia inicial para a prévia local. No Coolify e no Actions, são regenerados antes da publicação, sem criar um commit automático na `main`.
 
 Para sincronizar localmente, forneça um token com leitura do repositório em `GITHUB_TOKEN` e execute:
 

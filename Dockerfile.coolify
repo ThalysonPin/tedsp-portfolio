@@ -1,0 +1,29 @@
+# syntax=docker/dockerfile:1
+
+FROM python:3.13-alpine AS content
+WORKDIR /app
+COPY . /app
+
+RUN python -m unittest discover -s tests -v
+
+# Public repository: use the existing synchronization functions without a token.
+RUN python - <<'PY'
+from scripts.sync_github_issues import build_feed, fetch_issues
+
+repository = "ThalysonPin/tedsp-portfolio"
+issues = fetch_issues(repository, "")
+feed = build_feed(issues, repository, "dist")
+print(
+    "Synchronized",
+    len(feed["projects"]),
+    "portfolio project(s) and",
+    sum(len(project["images"]) for project in feed["projects"]),
+    "image(s).",
+)
+PY
+
+FROM nginx:stable-alpine
+COPY --from=content /app/dist/ /usr/share/nginx/html/
+EXPOSE 80
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget -q -O /dev/null http://127.0.0.1/ || exit 1
