@@ -135,15 +135,24 @@ class IssueHTML(HTMLParser):
     ALLOWED = {'p', 'strong', 'em', 'del', 'code', 'pre', 'blockquote', 'ul', 'ol', 'li', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'hr', 'br', 'details', 'summary'}
     BLOCKED = {'script', 'style', 'iframe', 'object', 'svg', 'form', 'video', 'audio'}
 
-    def __init__(self, images):
+    def __init__(self, images, strip_title=False):
         super().__init__(convert_charrefs=True)
         self.images = images
         self.output = []
         self.stack = []
         self.blocked = 0
         self.pictures = []
+        self.strip_title = strip_title
+        self.title_removed = False
+        self.skipping_title = False
 
     def handle_starttag(self, tag, attrs):
+        if self.skipping_title:
+            return
+        if tag == 'h1' and self.strip_title and not self.title_removed and not self.blocked:
+            self.skipping_title = True
+            self.title_removed = True
+            return
         if tag in self.BLOCKED:
             self.blocked += 1
         if self.blocked:
@@ -182,6 +191,10 @@ class IssueHTML(HTMLParser):
             self.handle_endtag(tag)
 
     def handle_endtag(self, tag):
+        if self.skipping_title:
+            if tag == 'h1':
+                self.skipping_title = False
+            return
         if self.blocked:
             if tag in self.BLOCKED:
                 self.blocked -= 1
@@ -192,8 +205,121 @@ class IssueHTML(HTMLParser):
                 self.output.append('</' + mapped + '>')
 
     def handle_data(self, data):
-        if not self.blocked:
+        if not self.blocked and not self.skipping_title:
             self.output.append(html.escape(data))
+
+
+class LocalizedHTML(HTMLParser):
+    """Extract the contents of top-level language details before sanitization."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.blocks = {}
+        self.details_depth = 0
+        self.summary_active = False
+        self.summary_seen = False
+        self.summary_text = []
+        self.parts = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'details':
+            if self.details_depth == 0:
+                self.details_depth = 1
+                self.summary_seen = False
+                self.summary_text = []
+                self.parts = []
+                return
+            self.details_depth += 1
+        if not self.details_depth:
+            return
+        if tag == 'summary' and self.details_depth == 1 and not self.summary_seen:
+            self.summary_active = True
+            self.summary_seen = True
+            return
+        if not self.summary_active:
+            self.parts.append(self.get_starttag_text())
+
+    def handle_startendtag(self, tag, attrs):
+        if self.details_depth and not self.summary_active:
+            self.parts.append(self.get_starttag_text())
+
+    def handle_endtag(self, tag):
+        if not self.details_depth:
+            return
+        if tag == 'summary' and self.details_depth == 1 and self.summary_active:
+            self.summary_active = False
+            return
+        if tag == 'details':
+            if self.details_depth == 1:
+                label = ' '.join(''.join(self.summary_text).split()).casefold()
+                language = {'português': 'pt', 'portugues': 'pt', 'english': 'en'}.get(label)
+                if language:
+                    if language in self.blocks:
+                        raise ValueError('Duplicate rendered portfolio language: ' + language)
+                    self.blocks[language] = ''.join(self.parts)
+                self.details_depth = 0
+                self.summary_active = False
+                return
+            self.details_depth -= 1
+        if not self.summary_active:
+            self.parts.append('</' + tag + '>')
+
+    def handle_data(self, data):
+        if self.summary_active:
+            self.summary_text.append(data)
+        elif self.details_depth:
+            self.parts.append(html.escape(data))
+
+    def close(self):
+        super().close()
+        if self.details_depth:
+            raise ValueError('Unclosed rendered portfolio language block')
+
+
+def localized_markdown(source):
+    """Return explicit PT/EN Markdown, or None for an unmarked legacy issue."""
+    if not re.search(r'<!--\s*/?portfolio(?::|\s|-->)', source):
+        return None
+    markers = re.findall(r'<!--\s*(portfolio:[a-z]+|/portfolio)\s*-->', source)
+    if markers != ['portfolio:pt', 'portfolio:en', '/portfolio']:
+        raise ValueError('Invalid portfolio language markers: expected one pt block and one en block')
+    pattern = r'\s*<!--\s*portfolio:pt\s*-->(?P<pt>.*?)<!--\s*portfolio:en\s*-->(?P<en>.*?)<!--\s*/portfolio\s*-->\s*'
+    match = re.fullmatch(pattern, source, re.DOTALL)
+    if not match:
+        raise ValueError('Invalid portfolio language markers: expected pt, en and closing portfolio marker')
+    result = {}
+    for language, label in [('pt', 'Português'), ('en', 'English')]:
+        wrapper = re.fullmatch(r'\s*<details\b[^>]*>\s*<summary\b[^>]*>(.*?)</summary>(.*)</details>\s*', match[language], re.DOTALL | re.IGNORECASE)
+        if not wrapper:
+            raise ValueError('Missing portfolio details block: ' + language)
+        summary_label = html.unescape(re.sub(r'<[^>]*>', '', wrapper[1]))
+        if ' '.join(summary_label.split()).casefold() != label.casefold():
+            raise ValueError('Unexpected portfolio summary label: ' + language)
+        result[language] = wrapper[2].strip()
+        if not re.search(r'^#\s+\S', result[language], re.MULTILINE):
+            raise ValueError('Missing portfolio title: ' + language)
+    return result
+
+
+def localized_title(source):
+    title = re.search(r'^#\s+(.+?)\s*$', source, re.MULTILINE)[1]
+    title = re.sub(r'\s+#+\s*$', '', title)
+    title = re.sub(r'\[([^]]+)\]\([^)]+\)', r'\1', title)
+    return html.unescape(re.sub(r'[*`_]', '', title)).strip()
+
+
+def render_localized_content(raw, rendered, images, title, strip_title=False):
+    parser = IssueHTML(images, strip_title=strip_title)
+    parser.feed(rendered)
+    parser.close()
+    return {'title': title, 'summary': summary(raw), 'bodyHtml': ''.join(parser.output), 'images': parser.pictures}
+
+
+def untranslated_english(number, url):
+    message = 'An English translation of this project is not available yet.'
+    body = '<p>' + message + ' You can read the original documentation on GitHub.</p>'
+    body += '<p><a href="' + html.escape(url, quote=True) + '" target="_blank" rel="noopener noreferrer">View the original issue on GitHub</a></p>'
+    return {'title': 'Project #' + str(number), 'summary': message + ' Read the original documentation on GitHub.', 'bodyHtml': body, 'images': []}
 
 
 def markdown_fixture(source):
@@ -258,10 +384,29 @@ def build_feed(issues, repo, output, token='', label='', offline=False):
         rendered = issue.get('body_html')
         if rendered is None and not offline:
             raise ValueError('GitHub did not return rendered Markdown')
-        parser = IssueHTML(images)
-        parser.feed(rendered if rendered is not None else markdown_fixture(raw))
-        parser.close()
-        projects.append({'number': issue['number'], 'title': issue['title'], 'summary': summary(raw), 'updatedAt': issue.get('updated_at', ''), 'url': 'https://github.com/' + repo + '/issues/' + str(issue['number']), 'labels': [name for name in labels if name != label], 'bodyHtml': ''.join(parser.output), 'images': parser.pictures})
+        url = 'https://github.com/' + repo + '/issues/' + str(issue['number'])
+        try:
+            markdown = localized_markdown(raw)
+            if markdown is None:
+                portuguese = render_localized_content(raw, rendered if rendered is not None else markdown_fixture(raw), images, issue['title'])
+                translations = {'pt': portuguese, 'en': untranslated_english(issue['number'], url)}
+            else:
+                if rendered is None:
+                    rendered_languages = {language: markdown_fixture(content) for language, content in markdown.items()}
+                else:
+                    splitter = LocalizedHTML()
+                    splitter.feed(rendered)
+                    splitter.close()
+                    rendered_languages = splitter.blocks
+                for language in ('pt', 'en'):
+                    if language not in rendered_languages:
+                        raise ValueError('Missing rendered portfolio language: ' + language)
+                translations = {language: render_localized_content(content, rendered_languages[language], images, localized_title(content), strip_title=True) for language, content in markdown.items()}
+                portuguese = translations['pt']
+        except ValueError as error:
+            raise ValueError('Issue #' + str(issue['number']) + ': ' + str(error)) from error
+        all_images = list(dict.fromkeys(path for translation in translations.values() for path in translation['images']))
+        projects.append({'number': issue['number'], **portuguese, 'updatedAt': issue.get('updated_at', ''), 'url': url, 'labels': [name for name in labels if name != label], 'images': all_images, 'translations': translations})
     feed = {'repository': repo, 'projects': projects}
     encoded = json.dumps(feed, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c').replace('\u2028', '\\u2028').replace('\u2029', '\\u2029')
     Path(output).mkdir(parents=True, exist_ok=True)

@@ -66,7 +66,37 @@ O script `scripts/sync_github_issues.py` usa o `GITHUB_TOKEN` temporário do Act
 
 A sincronização aceita imagens PNG, JPEG, GIF e WebP hospedadas no GitHub, inclusive arquivos do próprio repositório e anexos de issues. As imagens são baixadas novamente em cada publicação; erros de sincronização interrompem a nova publicação e preservam a versão anterior do site. Remover um projeto também retira suas imagens do artefato publicado.
 
-O corpo da documentação permanece no idioma em que a issue foi escrita. Os títulos e controles da interface acompanham a seleção PT/EN.
+A seleção PT/EN troca os títulos, os resumos, os textos completos, as legendas e os diagramas dos projetos. Os seis projetos existentes têm versões editoriais em primeira pessoa. Capturas reais mantêm a interface original, com legendas no idioma selecionado.
+
+Cada issue bilíngue usa o formato abaixo. O script aproveita o Markdown renderizado pelo GitHub, separa os idiomas e sanitiza cada versão antes de publicar. Os arquivos de referência ficam em `docs/portfolio/<número>.pt.md` e `.en.md`.
+
+```md
+<!-- portfolio:pt -->
+<details open>
+<summary>Português</summary>
+
+# Título em português
+
+## Visão geral
+
+Descrevo aqui o que construí.
+
+</details>
+<!-- portfolio:en -->
+<details>
+<summary>English</summary>
+
+# English title
+
+## Overview
+
+I explain what I built here.
+
+</details>
+<!-- /portfolio -->
+```
+
+Novos projetos precisam das duas versões para aparecerem traduzidos em EN. Uma issue antiga sem esses blocos continua disponível em PT; em EN, o site mostra um aviso em inglês e o link da documentação original. Blocos bilíngues incompletos interrompem a publicação em vez de misturar idiomas.
 
 Os arquivos `dist/issue-projects.js` e `dist/issue-media/` mantêm uma cópia inicial para a prévia local. No Coolify e no Actions, são regenerados antes da publicação, sem criar um commit automático na `main`.
 
