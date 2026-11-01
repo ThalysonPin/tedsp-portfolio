@@ -35,7 +35,16 @@ Abra <http://localhost:4173> no navegador. Qualquer servidor de arquivos estáti
 | `dist/curriculo-thalyson-pt.pdf` | Currículo em português |
 | `dist/curriculo-thalyson-en.pdf` | Currículo em inglês |
 
-Ao atualizar experiências ou contato, revise os textos nos dois idiomas em `app.js` e os metadados de `index.html`. Os PDFs são arquivos independentes e devem ser substituídos quando o currículo mudar. Os diagramas dos estudos de caso representam os fluxos descritos; não são demonstrações executáveis.
+Ao atualizar experiências ou contato, revise os textos nos dois idiomas em `app.js` e os metadados de `index.html`. Depois regenere os dois PDFs antes de publicar:
+
+```sh
+python3 -m pip install reportlab
+python3 scripts/generate_cv.py
+```
+
+O gerador usa as experiências, competências, formação, idiomas e contatos do site. Os resumos dos projetos selecionados ficam no próprio script. Os dois currículos têm uma página, texto selecionável e links clicáveis. O script também atualiza a versão dos links de download e do `app.js` em `index.html`, para evitar o uso dos PDFs antigos em cache. Inclua os dois PDFs, `app.js` e `index.html` no commit. O deploy no Coolify continua manual.
+
+Os diagramas dos estudos de caso representam os fluxos descritos; não são demonstrações executáveis.
 
 ## Hospedagem
 
