@@ -6,7 +6,17 @@ services:
     restart: unless-stopped
     expose:
       - "80"
-    mem_limit: 128m
+    mem_limit: 256m
+    sysctls:
+      net.ipv4.ip_unprivileged_port_start: "0"
+    environment:
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-https://tedsptech.com}
+      ADMIN_EMAIL: thalysonemanuels.p@gmail.com
+      ADMIN_SETUP_TOKEN: ${ADMIN_SETUP_TOKEN:-}
+      DATA_DIR: /data
+      PORT: "80"
+    volumes:
+      - portfolio-data:/data
     logging:
       driver: json-file
       options:
@@ -16,6 +26,9 @@ services:
       coolify-edge:
         aliases:
           - tedsp-portfolio
+
+volumes:
+  portfolio-data:
 
 networks:
   coolify-edge:

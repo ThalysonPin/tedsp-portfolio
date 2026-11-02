@@ -8,11 +8,12 @@ Site pessoal de **Thalyson Emanuel**, com foco em IA, automação e desenvolvime
 - Layout editorial claro e responsivo para computador e celular.
 - Estudos de caso com detalhes em diálogos acessíveis.
 - Currículos em PDF de uma página nos dois idiomas.
+- Painel `/secret-admin` com login, publicação de conteúdo e uploads persistentes no Coolify.
 - Navegação por teclado e respeito à preferência por movimento reduzido.
 
 ## Tecnologias
 
-HTML, CSS e JavaScript puro. O site não exige instalação de dependências nem compilação.
+HTML, CSS e JavaScript puro na interface. Python 3.13 e SQLite no serviço administrativo, sem dependências externas. A cópia no GitHub Pages continua estática; o painel funciona na aplicação do Coolify.
 
 ## Executar localmente
 
@@ -22,7 +23,7 @@ Com Python 3 instalado, execute na pasta do projeto:
 python3 -m http.server 4173 --directory dist
 ```
 
-Abra <http://localhost:4173> no navegador. Qualquer servidor de arquivos estáticos também pode servir a pasta `dist/`.
+Abra <http://localhost:4173> no navegador. Esse comando mostra apenas a versão estática. Para testar login, edição e uploads, consulte [a configuração do painel](docs/admin.md).
 
 ## Estrutura e edição
 
@@ -30,19 +31,28 @@ Abra <http://localhost:4173> no navegador. Qualquer servidor de arquivos estáti
 | --- | --- |
 | `dist/index.html` | Estrutura da página, metadados e apresentação inicial |
 | `dist/styles.css` | Cores, tipografia, layout e adaptação para celular |
-| `dist/app.js` | Textos PT/EN, experiências, estudos de caso e interações |
+| `dist/content.json` | Conteúdo inicial PT/EN, experiências, projetos, perfil e temas |
+| `dist/site-content.js` | Cópia estática do conteúdo inicial para o GitHub Pages |
+| `dist/app.js` | Renderização e interações do portfólio |
+| `dist/content-runtime.js` | Perfil, temas e projetos administrados |
+| `dist/admin/` | Interface do painel administrativo |
+| `server/admin_server.py` | Login, publicação, SQLite e uploads |
 | `dist/portrait.jpg` | Foto de perfil |
 | `dist/curriculo-thalyson-pt.pdf` | Currículo em português |
 | `dist/curriculo-thalyson-en.pdf` | Currículo em inglês |
 
-Ao atualizar experiências ou contato, revise os textos nos dois idiomas em `app.js` e os metadados de `index.html`. Depois regenere os dois PDFs antes de publicar:
+No site de produção, edite o conteúdo em `/secret-admin`. O botão **Salvar e publicar** atualiza o portfólio imediatamente. Mudanças de conteúdo feitas no painel ficam no volume do Coolify, não criam commits no GitHub e sobrevivem a novos deploys. Os campos em PT e EN são editados separadamente; o painel não inventa traduções.
+
+`dist/content.json` inicializa um banco novo. Em alterações pelo código, edite esse arquivo e regenere sua cópia estática (`window.PORTFOLIO_CONTENT = <JSON>;` em `dist/site-content.js`). O banco existente não é sobrescrito por um novo deploy. Exporte o JSON pelo painel para guardar uma cópia das edições; as fotos e PDFs exigem também backup do volume.
+
+Os currículos são PDFs independentes. Ao alterar a carreira, envie os PDFs atualizados na área **Arquivos** do painel. Para regenerar os PDFs iniciais pelo código, use:
 
 ```sh
 python3 -m pip install reportlab
 python3 scripts/generate_cv.py
 ```
 
-O gerador usa as experiências, competências, formação, idiomas e contatos do site. Os resumos dos projetos selecionados ficam no próprio script. Os dois currículos têm uma página, texto selecionável e links clicáveis. O script também atualiza a versão dos links de download e do `app.js` em `index.html`, para evitar o uso dos PDFs antigos em cache. Inclua os dois PDFs, `app.js` e `index.html` no commit. O deploy no Coolify continua manual.
+O gerador usa o conteúdo inicial de `dist/content.json`. Os resumos dos projetos selecionados ficam no próprio script. Ele atualiza os links de download e a cópia estática do conteúdo. Inclua os dois PDFs, `content.json`, `site-content.js`, `app.js` e `index.html` no commit. Ele não altera o banco do painel já instalado. O deploy no Coolify continua manual.
 
 Os diagramas dos estudos de caso representam os fluxos descritos; não são demonstrações executáveis.
 
@@ -52,13 +62,16 @@ O endereço de produção é <https://tedsptech.com/>, com DNS administrado na H
 
 A publicação na VPS é gerenciada pelo Coolify e usa a branch `main`:
 
-- `Dockerfile.coolify` executa os testes, sincroniza as issues públicas e suas imagens e prepara o servidor de arquivos estáticos.
+- `Dockerfile.coolify` executa os testes, sincroniza as issues públicas e suas imagens e inicia o servidor Python.
 - `docker-compose.coolify.yml` conecta o site à rede externa `coolify-edge`, com o alias estável `tedsp-portfolio`, sem publicar portas adicionais na VPS.
+- O volume `portfolio-data`, montado em `/data`, guarda o banco SQLite e os uploads fora da imagem de deploy.
 - No Coolify, o projeto usa o build pack Docker Compose, o arquivo `/docker-compose.coolify.yml` e o cache de build desativado para atualizar as issues a cada publicação.
 
 Para colocar alterações no ar, faça o push para `main` e clique em **Deploy** na aplicação do Coolify. Uma nova publicação também atualiza a seção de projetos com o estado atual das issues. Os eventos de issues do GitHub Pages não iniciam automaticamente uma publicação no Coolify.
 
-O workflow `.github/workflows/pages.yml` continua disponível para publicar uma cópia no GitHub Pages. Ele recebe eventos de push, issues e execução manual.
+Na primeira instalação do painel, configure `PUBLIC_ORIGIN=https://tedsptech.com` e `ADMIN_SETUP_TOKEN` nas variáveis da aplicação no Coolify e faça o deploy manual. Em `/secret-admin`, use o código de configuração para definir a senha do e-mail `thalysonemanuels.p@gmail.com`. [Instruções e recuperação de acesso](docs/admin.md).
+
+O workflow `.github/workflows/pages.yml` continua disponível para publicar uma cópia estática no GitHub Pages. Ele recebe eventos de push, issues e execução manual. O login e as edições do painel são exclusivos da aplicação Python no Coolify.
 
 ## Projetos sincronizados das issues
 

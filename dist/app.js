@@ -1,4 +1,5 @@
-const text = {
+const content = window.PORTFOLIO_CONTENT;
+const text = content?.text ?? {
   "pt": {
     "issuesEyebrow": "DOCUMENTAÇÃO DE PROJETOS",
     "issuesTitle": "Projetos no <em>GitHub</em>",
@@ -126,7 +127,7 @@ const text = {
     "metaDescription": "Thalyson Emanuel: applied AI development, n8n automation, and system integrations. Experience, projects, and contact."
   }
 };
-const jobs = [
+const jobs = content?.jobs ?? [
   {
     "company": "Digital Fuel Agency",
     "date": {
@@ -261,7 +262,7 @@ const jobs = [
     ]
   }
 ];
-const projects = [
+const projects = content?.projects ?? [
   {
     "id": "sales-intelligence",
     "number": "01",
@@ -396,7 +397,7 @@ const projects = [
     }
   }
 ];
-const skills = [
+const skills = content?.skills ?? [
   {
     "title": {
       "pt": "Automação e integrações",
@@ -450,34 +451,34 @@ const resumeVersion='8221ceb67312';
 let language='pt';
 const tr=value=>typeof value==='object'?value[language]:value;
 const translatedTag=tag=>language==='en'?({'IA / AI':'AI','APIs REST':'REST APIs','Automação':'Automation','Remoto':'Remote','Pagamentos':'Payments','Operações comerciais':'Sales operations','Agentes de IA':'AI agents','Engenharia de prompts':'Prompt engineering'}[tag]??tag):tag;
-const tags=items=>`<div class="tags">${items.map(x=>`<span>${translatedTag(x)}</span>`).join('')}</div>`;
-function renderJobs(){document.querySelector('.timeline').innerHTML=jobs.map((job,i)=>`<article class="job"><div class="job-meta">${tr(job.date)}<span>${tr(job.company)}</span></div><div><h3>${tr(job.title)}</h3><p>${tr(job.description)}</p>${job.extra?`<p>${tr(job.extra)}</p>`:''}${tags(job.tags)}</div></article>`).join('');}
-function renderProjects(){document.getElementById('project-list').innerHTML=projects.map((p,i)=>`<article class="project ${i===0?'featured':''}"><div class="project-visual"><span class="visual-number">${p.number}</span><span class="flow-label">${text[language].flowLabel}</span><ol class="flow">${tr(p.flow).map((step,j)=>`<li><span>${String(j+1).padStart(2,'0')}</span>${step}</li>`).join('')}</ol></div><div class="project-body"><span class="eyebrow">${text[language].caseLabel} / ${p.number}</span><h3>${tr(p.title)}</h3><p>${tr(p.description)}</p>${tags(p.tags)}<button class="case-button" data-case="${p.id}" aria-haspopup="dialog">${text[language].readCase}<span class="case-plus" aria-hidden="true">+</span></button></div></article>`).join('');document.querySelectorAll('button[data-case]').forEach(button=>button.addEventListener('click',()=>openCase(button.dataset.case)));}
-function renderSkills(){document.getElementById('skill-list').innerHTML=skills.map((group,i)=>`<article class="skill-group"><span class="skill-number">0${i+1}</span><h3>${tr(group.title)}</h3><div class="skill-items">${group.items.map(x=>`<span>${translatedTag(x)}</span>`).join('')}</div></article>`).join('');}
+const tags=items=>`<div class="tags">${items.map(x=>`<span>${safeText(translatedTag(x))}</span>`).join('')}</div>`;
+function renderJobs(){document.querySelector('.timeline').innerHTML=jobs.map((job,i)=>`<article class="job"><div class="job-meta">${safeText(tr(job.date))}<span>${safeText(tr(job.company))}</span></div><div><h3>${safeText(tr(job.title))}</h3><p>${safeText(tr(job.description))}</p>${job.extra?`<p>${safeText(tr(job.extra))}</p>`:''}${tags(job.tags)}</div></article>`).join('');}
+function renderProjects(){document.getElementById('project-list').innerHTML=projects.map((p,i)=>`<article class="project ${i===0?'featured':''}"><div class="project-visual"><span class="visual-number">${safeText(p.number)}</span><span class="flow-label">${text[language].flowLabel}</span><ol class="flow">${tr(p.flow).map((step,j)=>`<li><span>${String(j+1).padStart(2,'0')}</span>${safeText(step)}</li>`).join('')}</ol></div><div class="project-body"><span class="eyebrow">${text[language].caseLabel} / ${safeText(p.number)}</span><h3>${safeText(tr(p.title))}</h3><p>${safeText(tr(p.description))}</p>${tags(p.tags)}<button class="case-button" data-case="${safeText(p.id)}" aria-haspopup="dialog">${text[language].readCase}<span class="case-plus" aria-hidden="true">+</span></button></div></article>`).join('');document.querySelectorAll('button[data-case]').forEach(button=>button.addEventListener('click',()=>openCase(button.dataset.case)));}
+function renderSkills(){document.getElementById('skill-list').innerHTML=skills.map((group,i)=>`<article class="skill-group"><span class="skill-number">0${i+1}</span><h3>${safeText(tr(group.title))}</h3><div class="skill-items">${group.items.map(x=>`<span>${safeText(translatedTag(x))}</span>`).join('')}</div></article>`).join('');}
 const dialog=document.getElementById('case-dialog');
-function caseContent(id){const project=projects.find(p=>p.id===id);const d=project.details[language];document.getElementById('case-content').innerHTML=`<h2 id="case-title">${tr(project.title)}</h2>${tags(project.tags)}<div class="case-sections">${['context','role','solution','result'].map(key=>`<section><h3>${text[language][key]}</h3><p>${d[key]}</p></section>`).join('')}</div>`;}
+function caseContent(id){const project=projects.find(p=>p.id===id);const d=project.details[language];document.getElementById('case-content').innerHTML=`<h2 id="case-title">${safeText(tr(project.title))}</h2>${tags(project.tags)}<div class="case-sections">${['context','role','solution','result'].map(key=>`<section><h3>${text[language][key]}</h3><p>${safeText(d[key])}</p></section>`).join('')}</div>`;}
 function openCase(id){caseContent(id);dialog.dataset.projectId=id;dialog.showModal();document.body.classList.add('dialog-open');document.getElementById('close-dialog').focus();}
 function closeCase(){dialog.close();}
 document.getElementById('close-dialog').addEventListener('click',closeCase);
 dialog.addEventListener('close',()=>{document.body.classList.remove('dialog-open');document.querySelector(`[data-case="${dialog.dataset.projectId}"]`)?.focus();});
 dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeCase();}});
-function setLanguage(lang){language=lang;document.documentElement.lang=lang==='pt'?'pt-BR':'en';document.title=lang==='pt'?'Thalyson Emanuel — IA e Automação':'Thalyson Emanuel — AI & Automation';document.querySelector('meta[name="description"]').content=text[lang].metaDescription;document.querySelectorAll('[data-i18n]').forEach(node=>node.innerHTML=text[lang][node.dataset.i18n]);document.querySelectorAll('[data-lang]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.lang===lang)));document.querySelectorAll('.resume-link').forEach(link=>link.href=`curriculo-thalyson-${lang}.pdf?v=${resumeVersion}`);document.getElementById('main-nav').setAttribute('aria-label',lang==='pt'?'Navegação principal':'Main navigation');document.getElementById('close-dialog').setAttribute('aria-label',lang==='pt'?'Fechar estudo de caso':'Close case study');document.querySelector('.metrics').setAttribute('aria-label',lang==='pt'?'Experiência em números':'Experience in numbers');document.querySelector('.language').setAttribute('aria-label',lang==='pt'?'Idioma':'Language');document.querySelector('.brand').setAttribute('aria-label',lang==='pt'?'Thalyson Emanuel, início':'Thalyson Emanuel, home');document.getElementById('copy-status').textContent='';renderJobs();renderProjects();renderSkills();renderIssueProjects();updateThemeButton();if(issueDialog.open)renderIssueContent(issueDialog.dataset.issueNumber);if(dialog.open)caseContent(dialog.dataset.projectId);try{localStorage.setItem('tedsp-language',lang);}catch{}}
+function setLanguage(lang){language=lang;document.documentElement.lang=lang==='pt'?'pt-BR':'en';document.title=(publicProfile?.name || 'Thalyson Emanuel')+' — '+text[lang].heroRole;document.querySelector('meta[name="description"]').content=text[lang].metaDescription;document.querySelectorAll('[data-i18n]').forEach(node=>node.innerHTML=text[lang][node.dataset.i18n]);document.querySelectorAll('[data-lang]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.lang===lang)));document.querySelectorAll('.resume-link').forEach(link=>link.href=publicProfile?.resume?.[lang] || `curriculo-thalyson-${lang}.pdf?v=${resumeVersion}`);document.getElementById('main-nav').setAttribute('aria-label',lang==='pt'?'Navegação principal':'Main navigation');document.getElementById('close-dialog').setAttribute('aria-label',lang==='pt'?'Fechar estudo de caso':'Close case study');document.querySelector('.metrics').setAttribute('aria-label',lang==='pt'?'Experiência em números':'Experience in numbers');document.querySelector('.language').setAttribute('aria-label',lang==='pt'?'Idioma':'Language');document.querySelector('.brand').setAttribute('aria-label',(publicProfile?.name || 'Thalyson Emanuel')+(lang==='pt'?', início':', home'));document.getElementById('copy-status').textContent='';renderJobs();renderProjects();renderSkills();renderIssueProjects();updateThemeButton();if(issueDialog.open)renderIssueContent(issueDialog.dataset.issueNumber);if(dialog.open)caseContent(dialog.dataset.projectId);try{localStorage.setItem('tedsp-language',lang);}catch{}}
 document.querySelectorAll('[data-lang]').forEach(button=>button.addEventListener('click',()=>setLanguage(button.dataset.lang)));
 const menuButton=document.querySelector('.menu-button');const nav=document.getElementById('main-nav');
 function closeMenu(){menuButton.setAttribute('aria-expanded','false');nav.classList.remove('is-open');}
 menuButton.addEventListener('click',()=>{const open=menuButton.getAttribute('aria-expanded')!=='true';menuButton.setAttribute('aria-expanded',String(open));nav.classList.toggle('is-open',open);});
 nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('is-open')){closeMenu();menuButton.focus();}});
-document.getElementById('copy-email').addEventListener('click',async()=>{const status=document.getElementById('copy-status');try{await navigator.clipboard.writeText('thalysonemanuels.p@gmail.com');status.textContent=text[language].copied;}catch{const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(document.querySelector('.contact-email'));selection.removeAllRanges();selection.addRange(range);status.textContent=text[language].copyFailed;}});
+document.getElementById('copy-email').addEventListener('click',async()=>{const status=document.getElementById('copy-status');try{await navigator.clipboard.writeText(publicProfile?.email || 'thalysonemanuels.p@gmail.com');status.textContent=text[language].copied;}catch{const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(document.querySelector('.contact-email'));selection.removeAllRanges();selection.addRange(range);status.textContent=text[language].copyFailed;}});
 
 const issueFeed = window.PORTFOLIO_ISSUES || {projects:[]};
 const issueDialog = document.getElementById('issue-dialog');
-const issueProjects = Array.isArray(issueFeed.projects) ? issueFeed.projects : [];
+const issueProjects = mergeManagedIssues(Array.isArray(issueFeed.projects) ? issueFeed.projects : []);
 const escapeIssueText = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const issueDate = value => {
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? '' : new Intl.DateTimeFormat(language === 'pt' ? 'pt-BR' : 'en', {day:'numeric', month:'short', year:'numeric',timeZone:'UTC'}).format(date);
 };
-const localIssueImage = value => typeof value === 'string' && /^issue-media\/[a-f0-9]{20}\.(png|jpg|gif|webp)$/.test(value);
+const localIssueImage = value => typeof value === 'string' && (/^(?:\/)?issue-media\/[a-f0-9]{20}\.(png|jpg|gif|webp)$/.test(value) || /^\/uploads\/[a-f0-9-]+\.(png|jpg|webp)$/.test(value));
 
 function localizedIssueProject(project) {
   const translated = project.translations?.[language];
@@ -509,7 +510,7 @@ function renderIssueContent(number) {
   const project = localizedIssueProject(original);
   document.getElementById('issue-title').textContent = project.title;
   // bodyHtml is sanitized at build time; issue prose is never evaluated as code.
-  document.getElementById('issue-document').innerHTML = project.bodyHtml;
+  document.getElementById('issue-document').innerHTML = managedIssueHtml(project);
   document.querySelectorAll('#issue-document img').forEach(image => {
     if (!localIssueImage(image.getAttribute('src'))) return;
     let link = image.closest('a');
@@ -563,13 +564,14 @@ window.addEventListener('popstate', handleIssueHash);
 
 const themeToggle = document.getElementById('theme-toggle');
 function updateThemeButton() {
+  applyThemeColors();
   const dark = document.documentElement.dataset.theme === 'dark';
   const action = language === 'en' ? (dark ? 'Switch to light mode' : 'Switch to dark mode') : (dark ? 'Ativar modo claro' : 'Ativar modo escuro');
   const label = language === 'en' ? 'Dark mode' : 'Modo escuro';
   themeToggle.setAttribute('aria-pressed', String(dark));
   themeToggle.setAttribute('aria-label', label);
   themeToggle.title = action;
-  document.querySelector('meta[name="theme-color"]').content = dark ? '#080f1d' : '#f7f9fd';
+  document.querySelector('meta[name="theme-color"]').content = window.PORTFOLIO_CONTENT?.theme?.[dark ? 'dark' : 'light']?.background || (dark ? '#080f1d' : '#f7f9fd');
 }
 themeToggle.addEventListener('click', () => {
   const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
@@ -578,5 +580,6 @@ themeToggle.addEventListener('click', () => {
   updateThemeButton();
 });
 
+applyProfile();
 let saved;try{saved=localStorage.getItem('tedsp-language');}catch{}setLanguage(saved==='en'?'en':'pt');
 handleIssueHash();

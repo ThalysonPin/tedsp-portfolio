@@ -47,6 +47,9 @@ PROJECTS = {
 
 
 def site_constant(source: str, name: str):
+    seed = DIST / 'content.json'
+    if seed.exists():
+        return json.loads(seed.read_text(encoding='utf-8'))[name]
     start = re.search(rf"\bconst {name}\s*=\s*", source)
     if not start:
         raise ValueError(f"Site data not found: {name}")
@@ -77,8 +80,9 @@ def generate(lang: str, source: str, index: str) -> Path:
     text = site_constant(source, 'text')[lang]
     jobs = site_constant(source, 'jobs')
     skills = site_constant(source, 'skills')
-    email = re.search(r'href="mailto:([^"?]+)', index).group(1)
-    phone = re.search(r'https://wa\.me/(\d+)', index).group(1)
+    profile = json.loads((DIST / 'content.json').read_text(encoding='utf-8'))['profile']
+    email = profile['email']
+    phone = re.search(r'https://wa\.me/(\d+)', profile['whatsapp']).group(1)
     phone_label = f'+{phone[:2]} ({phone[2:4]}) {phone[4:9]}-{phone[9:]}' if len(phone) == 13 and phone.startswith('55') else '+' + phone
     pt = lang == 'pt'
     labels = ['PERFIL', 'COMPETÊNCIAS', 'EXPERIÊNCIA PROFISSIONAL', 'PROJETOS SELECIONADOS', 'FORMAÇÃO E IDIOMAS'] if pt else ['PROFILE', 'TECHNICAL SKILLS', 'PROFESSIONAL EXPERIENCE', 'SELECTED PROJECTS', 'EDUCATION & LANGUAGES']
@@ -91,11 +95,11 @@ def generate(lang: str, source: str, index: str) -> Path:
     date = ParagraphStyle('Date', parent=contact, fontSize=8.4, leading=11, spaceAfter=2)
     esc = html.escape
     link = lambda url, label: f'<link href="{esc(url, quote=True)}" color="#123A70">{esc(label)}</link>'
-    story = [Paragraph('Thalyson Emanuel', title), Paragraph(esc(text['heroRole']), role)]
+    story = [Paragraph(esc(profile['name']), title), Paragraph(esc(text['heroRole']), role)]
     location = text['location'].replace('·', '-')
     story += [
         Paragraph(f'{esc(location)} | {link("https://wa.me/" + phone, phone_label)} | {link("mailto:" + email, email)}', contact),
-        Paragraph(' | '.join([link('https://tedsptech.com/', 'tedsptech.com'), link('https://www.linkedin.com/in/thalysonemanuel/', 'linkedin.com/in/thalysonemanuel'), link('https://github.com/ThalysonPin', 'github.com/ThalysonPin')]), contact),
+        Paragraph(' | '.join([link('https://tedsptech.com/', 'tedsptech.com'), link(profile['linkedin'], profile['linkedin'].removeprefix('https://www.').removeprefix('https://').rstrip('/')), link(profile['github'], profile['github'].removeprefix('https://').rstrip('/'))]), contact),
         Paragraph(labels[0], heading), Paragraph(esc(text['heroIntro']), body),
         Paragraph(labels[1], heading),
     ]
@@ -128,7 +132,7 @@ def generate(lang: str, source: str, index: str) -> Path:
     story.append(Paragraph(esc(languages), body))
     output = DIST / f'curriculo-thalyson-{lang}.pdf'
     doc = SimpleDocTemplate(str(output), pagesize=A4, rightMargin=38, leftMargin=38, topMargin=32, bottomMargin=32,
-                            title=f'CV - Thalyson Emanuel - {text["heroRole"]}', author='Thalyson Emanuel',
+                            title=f'CV - {profile["name"]} - {text["heroRole"]}', author=profile['name'],
                             subject='Currículo profissional' if pt else 'Professional CV', pageCompression=1)
 
     def footer(canvas, document):
@@ -138,7 +142,7 @@ def generate(lang: str, source: str, index: str) -> Path:
         canvas.line(38, 25, A4[0] - 38, 25)
         canvas.setFont('CV', 7)
         canvas.setFillColor(GRAY)
-        canvas.drawString(38, 14, 'Thalyson Emanuel | TEDSP')
+        canvas.drawString(38, 14, profile['name'] + ' | ' + profile['brand'])
         canvas.drawRightString(A4[0] - 38, 14, 'tedsptech.com')
 
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
@@ -162,6 +166,13 @@ def main():
     index = re.sub(r'app\.js\?v=[^"\s]+', f'app.js?v=cv-{version}', index)
     app_path.write_text(app, encoding='utf-8')
     index_path.write_text(index, encoding='utf-8')
+    seed_path = DIST / 'content.json'
+    if seed_path.exists():
+        seed = json.loads(seed_path.read_text(encoding='utf-8'))
+        seed['profile']['resume'] = {lang: f'curriculo-thalyson-{lang}.pdf?v={version}' for lang in ('pt', 'en')}
+        seed_path.write_text(json.dumps(seed, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        payload = json.dumps(seed, ensure_ascii=False).replace('<', '\\u003c')
+        (DIST / 'site-content.js').write_text('window.PORTFOLIO_CONTENT = ' + payload + ';\n', encoding='utf-8')
     for path in outputs:
         print(f'{path.relative_to(ROOT)} ({path.stat().st_size} bytes)')
     print(f'Download version: {version}')

@@ -1,29 +1,25 @@
 # syntax=docker/dockerfile:1
-
 FROM python:3.13-alpine AS content
 WORKDIR /app
 COPY . /app
-
 RUN python -m unittest discover -s tests -v
-
-# Public repository: use the existing synchronization functions without a token.
+# Public GitHub issues remain synchronized at each manual deployment.
 RUN python - <<'PY'
 from scripts.sync_github_issues import build_feed, fetch_issues
-
 repository = "ThalysonPin/tedsp-portfolio"
-issues = fetch_issues(repository, "")
-feed = build_feed(issues, repository, "dist")
-print(
-    "Synchronized",
-    len(feed["projects"]),
-    "portfolio project(s) and",
-    sum(len(project["images"]) for project in feed["projects"]),
-    "image(s).",
-)
+feed = build_feed(fetch_issues(repository, ""), repository, "dist")
+print("Synchronized", len(feed["projects"]), "portfolio projects.")
 PY
 
-FROM nginx:stable-alpine
-COPY --from=content /app/dist/ /usr/share/nginx/html/
+FROM python:3.13-alpine
+WORKDIR /app
+RUN addgroup -S portfolio && adduser -S -G portfolio -u 10001 portfolio \
+    && mkdir /data && chown portfolio:portfolio /data
+COPY --from=content /app/dist/ /app/dist/
+COPY --from=content /app/server/ /app/server/
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PORT=80 DATA_DIR=/data
+USER portfolio
 EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget -q -O /dev/null http://127.0.0.1/ || exit 1
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1/healthz', timeout=2)" || exit 1
+CMD ["python", "server/admin_server.py"]

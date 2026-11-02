@@ -1,0 +1,14 @@
+.git
+.env
+.env.*
+**/__pycache__
+**/node_modules
+everbetter
+landpages
+forja-performance
+bravo-barbearia
+output
+tmp
+data
+*.sqlite*
+*.db
