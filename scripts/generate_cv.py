@@ -86,13 +86,14 @@ def generate(lang: str, source: str, index: str) -> Path:
     phone_label = f'+{phone[:2]} ({phone[2:4]}) {phone[4:9]}-{phone[9:]}' if len(phone) == 13 and phone.startswith('55') else '+' + phone
     pt = lang == 'pt'
     labels = ['PERFIL', 'COMPETÊNCIAS', 'EXPERIÊNCIA PROFISSIONAL', 'PROJETOS SELECIONADOS', 'FORMAÇÃO E IDIOMAS'] if pt else ['PROFILE', 'TECHNICAL SKILLS', 'PROFESSIONAL EXPERIENCE', 'SELECTED PROJECTS', 'EDUCATION & LANGUAGES']
-    body = ParagraphStyle('Body', fontName='CV', fontSize=9.8, leading=12.3, textColor=INK)
+    body = ParagraphStyle('Body', fontName='CV', fontSize=9.8, leading=11.6, textColor=INK)
     title = ParagraphStyle('Title', parent=body, fontName='CV-Bold', fontSize=24, leading=28, textColor=BLUE)
     role = ParagraphStyle('Role', parent=body, fontSize=11.5, leading=16, textColor=BLUE)
     contact = ParagraphStyle('Contact', parent=body, fontSize=8.8, leading=12, textColor=GRAY)
-    heading = ParagraphStyle('Section', parent=body, fontName='CV-Bold', fontSize=10, leading=13, textColor=BLUE, spaceBefore=10, spaceAfter=5)
+    heading = ParagraphStyle('Section', parent=body, fontName='CV-Bold', fontSize=10, leading=13, textColor=BLUE, spaceBefore=9, spaceAfter=5)
     job_heading = ParagraphStyle('Job', parent=body, fontName='CV-Bold', fontSize=9.9, leading=12.5)
     date = ParagraphStyle('Date', parent=contact, fontSize=8.4, leading=11, spaceAfter=2)
+    job_stack = ParagraphStyle('JobStack', parent=contact, leading=11, spaceBefore=2)
     esc = html.escape
     link = lambda url, label: f'<link href="{esc(url, quote=True)}" color="#123A70">{esc(label)}</link>'
     story = [Paragraph(esc(profile['name']), title), Paragraph(esc(text['heroRole']), role)]
@@ -105,10 +106,12 @@ def generate(lang: str, source: str, index: str) -> Path:
     ]
     # Keep the same stack as the site while prioritizing the main tools on one page.
     names = {item for group in skills for item in group['items']}
-    preferred = ['n8n', 'Python', 'JavaScript', 'Node.js', 'React', 'Next.js', 'PostgreSQL', 'Supabase', 'Docker', 'Git', 'OpenAI', 'RAG', 'Kommo', 'HubSpot', 'GoHighLevel', 'WhatsApp']
+    preferred = ['n8n', 'Python', 'JavaScript', 'Node.js', 'React', 'Next.js', 'PostgreSQL', 'MySQL', 'Redis', 'Supabase', 'Docker', 'Portainer', 'DevOps', 'Figma', 'Git', 'OpenAI', 'RAG', 'Kommo', 'HubSpot', 'GoHighLevel', 'WhatsApp']
     stack = ', '.join(item for item in preferred if item in names)
     stack += '. APIs REST, webhooks, LLMs e integrações com CRMs e Google Calendar.' if pt else '. REST APIs, webhooks, LLMs, and integrations with CRMs and Google Calendar.'
     story += [Paragraph(esc(stack), body), Paragraph(labels[2], heading)]
+    technologies = ('Docker', 'Portainer', 'Redis', 'PostgreSQL', 'MySQL', 'Figma')
+    infrastructure = ('AWS', 'Hetzner', 'Hostinger', 'Contabo', 'Ubuntu', 'Debian')
     for job in jobs:
         company = selected(job['company'], lang)
         desc = selected(job['description'], lang)
@@ -117,8 +120,16 @@ def generate(lang: str, source: str, index: str) -> Path:
         block = [
             Paragraph(esc(company) + ' | ' + esc(selected(job['title'], lang)), job_heading),
             Paragraph(esc(selected(job['date'], lang)), date),
-            Paragraph(esc(desc), body), Spacer(1, 6),
+            Paragraph(esc(desc), body),
         ]
+        tags = job['tags']
+        highlights = [tool for tool in technologies if tool in tags]
+        if 'DevOps' in tags:
+            platforms = ', '.join(platform for platform in infrastructure if platform in tags)
+            highlights.append(f'DevOps ({platforms})' if platforms else 'DevOps')
+        if highlights:
+            block.append(Paragraph(esc(' · '.join(highlights)), job_stack))
+        block.append(Spacer(1, 5))
         story.append(KeepTogether(block))
     story.append(Paragraph(labels[3], heading))
     for name, url, description in PROJECTS[lang]:
@@ -131,7 +142,7 @@ def generate(lang: str, source: str, index: str) -> Path:
     languages = clean(text['languageDescription'].replace('<br>', '. ')) + '.'
     story.append(Paragraph(esc(languages), body))
     output = DIST / f'curriculo-thalyson-{lang}.pdf'
-    doc = SimpleDocTemplate(str(output), pagesize=A4, rightMargin=38, leftMargin=38, topMargin=32, bottomMargin=32,
+    doc = SimpleDocTemplate(str(output), pagesize=A4, rightMargin=34, leftMargin=34, topMargin=30, bottomMargin=32,
                             title=f'CV - {profile["name"]} - {text["heroRole"]}', author=profile['name'],
                             subject='Currículo profissional' if pt else 'Professional CV', pageCompression=1)
 
@@ -139,11 +150,11 @@ def generate(lang: str, source: str, index: str) -> Path:
         if document.page > 1:
             raise ValueError(f'CV {lang} exceeds one page; shorten the copy before publishing.')
         canvas.setStrokeColor(colors.HexColor('#D4DCE7'))
-        canvas.line(38, 25, A4[0] - 38, 25)
+        canvas.line(34, 25, A4[0] - 34, 25)
         canvas.setFont('CV', 7)
         canvas.setFillColor(GRAY)
-        canvas.drawString(38, 14, profile['name'] + ' | ' + profile['brand'])
-        canvas.drawRightString(A4[0] - 38, 14, 'tedsptech.com')
+        canvas.drawString(34, 14, profile['name'] + ' | ' + profile['brand'])
+        canvas.drawRightString(A4[0] - 34, 14, 'tedsptech.com')
 
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
     return output

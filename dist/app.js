@@ -447,7 +447,7 @@ const skills = content?.skills ?? [
     ]
   }
 ];
-const resumeVersion='8221ceb67312';
+const resumeVersion='8e6e6397df26';
 let language='pt';
 const tr=value=>typeof value==='object'?value[language]:value;
 const translatedTag=tag=>language==='en'?({'IA / AI':'AI','APIs REST':'REST APIs','Automação':'Automation','Remoto':'Remote','Pagamentos':'Payments','Operações comerciais':'Sales operations','Agentes de IA':'AI agents','Engenharia de prompts':'Prompt engineering'}[tag]??tag):tag;

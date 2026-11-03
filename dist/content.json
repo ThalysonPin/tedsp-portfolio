@@ -145,7 +145,16 @@
       "tags": [
         "IA / AI",
         "Automação",
-        "Remoto"
+        "Remoto",
+        "Docker",
+        "PostgreSQL",
+        "DevOps",
+        "AWS",
+        "Hetzner",
+        "Hostinger",
+        "Contabo",
+        "Ubuntu",
+        "Debian"
       ]
     },
     {
@@ -171,7 +180,18 @@
         "Python",
         "JavaScript",
         "LLMs",
-        "APIs REST"
+        "APIs REST",
+        "Docker",
+        "Portainer",
+        "Redis",
+        "PostgreSQL",
+        "DevOps",
+        "AWS",
+        "Hetzner",
+        "Hostinger",
+        "Contabo",
+        "Ubuntu",
+        "Debian"
       ]
     },
     {
@@ -196,7 +216,19 @@
         "n8n",
         "Supabase",
         "CRMs",
-        "Webhooks"
+        "Webhooks",
+        "Docker",
+        "Portainer",
+        "Redis",
+        "PostgreSQL",
+        "MySQL",
+        "DevOps",
+        "AWS",
+        "Hetzner",
+        "Hostinger",
+        "Contabo",
+        "Ubuntu",
+        "Debian"
       ]
     },
     {
@@ -216,7 +248,8 @@
       "tags": [
         "React",
         "Node.js",
-        "Pagamentos"
+        "Pagamentos",
+        "Figma"
       ]
     },
     {
@@ -236,7 +269,11 @@
       "tags": [
         "React",
         "Figma",
-        "CRM"
+        "CRM",
+        "Docker",
+        "Portainer",
+        "Redis",
+        "PostgreSQL"
       ]
     },
     {
@@ -430,8 +467,8 @@
     },
     {
       "title": {
-        "pt": "Desenvolvimento e dados",
-        "en": "Development & data"
+        "pt": "Desenvolvimento, dados e DevOps",
+        "en": "Development, data & DevOps"
       },
       "items": [
         "Python",
@@ -443,7 +480,18 @@
         "Supabase",
         "Docker",
         "Railway",
-        "Git"
+        "Git",
+        "Portainer",
+        "Redis",
+        "MySQL",
+        "Figma",
+        "DevOps",
+        "AWS",
+        "Hetzner",
+        "Hostinger",
+        "Contabo",
+        "Ubuntu",
+        "Debian"
       ]
     }
   ],
@@ -458,8 +506,8 @@
     "photo": "portrait.jpg",
     "photoAlt": "Thalyson Emanuel",
     "resume": {
-      "pt": "curriculo-thalyson-pt.pdf?v=8221ceb67312",
-      "en": "curriculo-thalyson-en.pdf?v=8221ceb67312"
+      "pt": "curriculo-thalyson-pt.pdf?v=8e6e6397df26",
+      "en": "curriculo-thalyson-en.pdf?v=8e6e6397df26"
     },
     "metrics": [
       "300+",
