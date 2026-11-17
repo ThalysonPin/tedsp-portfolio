@@ -448,7 +448,7 @@ const skills = content?.skills ?? [
   }
 ];
 const resumeVersion='8e6e6397df26';
-let language='pt';
+let language='en';
 const tr=value=>typeof value==='object'?value[language]:value;
 const translatedTag=tag=>language==='en'?({'IA / AI':'AI','APIs REST':'REST APIs','Automação':'Automation','Remoto':'Remote','Pagamentos':'Payments','Operações comerciais':'Sales operations','Agentes de IA':'AI agents','Engenharia de prompts':'Prompt engineering'}[tag]??tag):tag;
 const tags=items=>`<div class="tags">${items.map(x=>`<span>${safeText(translatedTag(x))}</span>`).join('')}</div>`;
@@ -581,5 +581,5 @@ themeToggle.addEventListener('click', () => {
 });
 
 applyProfile();
-let saved;try{saved=localStorage.getItem('tedsp-language');}catch{}setLanguage(saved==='en'?'en':'pt');
+let saved;try{saved=localStorage.getItem('tedsp-language');}catch{}setLanguage(saved==='pt'?'pt':'en');
 handleIssueHash();
