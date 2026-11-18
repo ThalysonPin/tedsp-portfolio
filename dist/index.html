@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700;750&display=swap" rel="stylesheet">
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('tedsp-theme')==='dark'?'dark':'light';}catch{document.documentElement.dataset.theme='light';}</script>
-  <link rel="stylesheet" href="styles.css?v=20261031-blue-1">
+  <link rel="stylesheet" href="styles.css?v=20261118-studio">
 </head>
 <body>
 <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
@@ -19,14 +19,29 @@
 </div></header>
 <main id="main">
 <section class="hero wrap" id="inicio" aria-labelledby="hero-name">
-  <div class="hero-copy"><div class="eyebrow"><span class="line"></span><span data-i18n="heroEyebrow">APPLIED AI · AUTOMATION · DEVELOPMENT</span></div>
+  <div class="hero-heading"><div class="eyebrow"><span class="line"></span><span data-i18n="heroEyebrow">APPLIED AI · AUTOMATION · DEVELOPMENT</span></div>
     <h1 id="hero-name">Thalyson<br><span>Emanuel.</span></h1>
     <p class="hero-role" data-i18n="heroRole">AI & Automation Developer</p>
+  </div>
+  <figure class="intro-film">
+    <div class="film-screen">
+      <video controls playsinline preload="none" width="1280" height="720" poster="media/introduction-poster.jpg" aria-labelledby="film-caption">
+        <source src="media/introduction-en.mp4" type="video/mp4">
+        <track kind="subtitles" src="media/introduction-pt.vtt" srclang="pt" label="Português">
+        <a href="media/introduction-en.mp4">MP4</a>
+      </video>
+      <button class="film-play" type="button" aria-labelledby="film-play-label film-caption" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.8v16.4l13-8.2z"/></svg>
+        <span id="film-play-label" class="visually-hidden" data-i18n="playVideo">Play video</span>
+      </button>
+    </div>
+    <figcaption><span id="film-caption" data-i18n="introVideo">My introduction in English</span><span class="film-duration"><span aria-hidden="true">◷ </span><time datetime="PT1M21S">1:21</time></span></figcaption>
+  </figure>
+  <div class="hero-details">
     <p class="hero-intro" data-i18n="heroIntro">I build AI agents and automations, and connect the systems teams use for customer service, marketing, and sales.</p>
     <div class="hero-actions"><a class="button primary resume-link" href="curriculo-thalyson-en.pdf?v=8e6e6397df26" download data-i18n="download">Download CV</a><a class="button secondary" href="#projetos" data-i18n="viewProjects">View projects</a><a class="text-link" href="https://www.linkedin.com/in/thalysonemanuel/" target="_blank" rel="noopener noreferrer">LinkedIn</a></div>
     <div class="hero-meta"><span data-i18n="location">Brazil · Remote work</span><span data-i18n="english">Advanced English · C1</span></div>
   </div>
-  <div class="portrait-block"><div class="portrait-frame"><img src="portrait.jpg" width="800" height="800" alt="Thalyson Emanuel" fetchpriority="high"></div></div>
 </section>
 <section class="metrics wrap" aria-label="Experience in numbers"><div><strong>300<span>+</span></strong><p data-i18n="metric1">workflows developed<br>and maintained</p></div><div><strong>50<span>+</span></strong><p data-i18n="metric2">clinics supported by<br>AI presales agents</p></div><div><strong>20<span>+</span></strong><p data-i18n="metric3">clients supported<br>through Foltz consulting</p></div></section>
 <section class="section wrap" id="experiencia"><div class="section-heading"><div><span class="eyebrow" data-i18n="experienceLabel">01 / EXPERIENCE</span><h2 data-i18n="experienceTitle">Professional<br><em>experience</em></h2></div><p data-i18n="experienceIntro">I work on development, integrations, and automation, from understanding business processes to maintaining the software in production.</p></div>
@@ -34,7 +49,7 @@
 </section>
 <section class="projects-section" id="projetos"><div class="wrap section"><section class="issue-projects" id="documentacao" aria-labelledby="issue-section-title" hidden><div class="issue-section-heading"><div><span class="eyebrow" data-i18n="issuesEyebrow">PROJECT DOCUMENTATION</span><h3 id="issue-section-title" data-i18n="issuesTitle">Projects on <em>GitHub</em></h3></div><p data-i18n="issuesIntro">Here I explain what I built, the tools I chose, and how each project works.</p></div><div id="issue-project-list"></div></section><div class="section-heading"><div><span class="eyebrow" data-i18n="projectsLabel">02 / PROJECTS</span><h2 data-i18n="projectsTitle">AI & automation<br><em>projects</em></h2></div><p data-i18n="projectsIntro">A few projects I’ve built for sales teams and medical clinics.</p></div><div id="project-list"></div><div class="github-rail"><p data-i18n="githubIntro">More projects and development work on GitHub.</p><a class="text-link" href="https://github.com/ThalysonPin" target="_blank" rel="noopener noreferrer" data-i18n="githubLink">Explore my GitHub</a></div></div></section>
 <section class="section wrap" id="competencias"><div class="section-heading"><div><span class="eyebrow" data-i18n="skillsLabel">03 / TECHNICAL SKILLS</span><h2 data-i18n="skillsTitle">Technical<br><em>skills</em></h2></div><p data-i18n="skillsIntro">I use Python, workflow tools, and web development to connect systems and build applications.</p></div><div id="skill-list" class="skill-grid"></div><div class="education"><div><span class="eyebrow" data-i18n="educationLabel">EDUCATION IN PROGRESS</span><h3 data-i18n="educationTitle">Systems Analysis and Development</h3><p data-i18n="educationSchool">UNIGRAN · Brazil</p></div><div><span class="eyebrow" data-i18n="languageLabel">COMMUNICATION</span><h3 data-i18n="languageTitle">Portuguese and English</h3><p data-i18n="languageDescription">Native Portuguese · Advanced English (C1)<br>EF SET certificate</p></div></div></section>
-<section class="contact-section" id="contato"><div class="wrap contact-inner"><div><span class="eyebrow" data-i18n="contactLabel">04 / CONTACT</span><h2 data-i18n="contactTitle"><em>Contact</em></h2><p data-i18n="contactIntro">I’m open to remote roles in AI, automation, and software development.</p></div><div class="contact-links"><a class="contact-email" href="mailto:thalysonemanuels.p@gmail.com">thalysonemanuels.p@gmail.com</a><div class="contact-social"><a href="https://www.linkedin.com/in/thalysonemanuel/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://github.com/ThalysonPin" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://wa.me/5567984732575" target="_blank" rel="noopener noreferrer">WhatsApp</a></div><button class="button contact-copy" id="copy-email" data-i18n="copyEmail">Copy email</button><p id="copy-status" role="status" aria-live="polite"></p></div></div></section>
+<section class="contact-section" id="contato"><div class="wrap contact-inner"><div><div class="portrait-frame"><img src="portrait.jpg" width="80" height="80" alt="Thalyson Emanuel" loading="lazy"></div><span class="eyebrow" data-i18n="contactLabel">04 / CONTACT</span><h2 data-i18n="contactTitle"><em>Contact</em></h2><p data-i18n="contactIntro">I’m open to remote roles in AI, automation, and software development.</p></div><div class="contact-links"><a class="contact-email" href="mailto:thalysonemanuels.p@gmail.com">thalysonemanuels.p@gmail.com</a><div class="contact-social"><a href="https://www.linkedin.com/in/thalysonemanuel/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://github.com/ThalysonPin" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://wa.me/5567984732575" target="_blank" rel="noopener noreferrer">WhatsApp</a></div><button class="button contact-copy" id="copy-email" data-i18n="copyEmail">Copy email</button><p id="copy-status" role="status" aria-live="polite"></p></div></div></section>
 </main>
 <footer class="wrap footer"><span>© 2026 Thalyson Emanuel · TEDSP</span><a class="resume-link" href="curriculo-thalyson-en.pdf?v=8e6e6397df26" download data-i18n="footerResume">PDF CV</a><a href="#inicio" data-i18n="backToTop">Back to top</a></footer>
 <dialog id="case-dialog" aria-labelledby="case-title"><div class="dialog-top"><span class="eyebrow" data-i18n="caseLabel">CASE STUDY</span><button id="close-dialog" class="dialog-close" aria-label="Close case study">×</button></div><div id="case-content"></div></dialog>
@@ -43,5 +58,5 @@
 <script src="site-content.js?v=admin-1" defer></script>
 <script src="content-runtime.js?v=admin-1" defer></script>
 <script src="issue-projects.js?v=20261101-bilingual-1" defer></script>
-<script src="app.js?v=20261117-default-en-1" defer></script>
+<script src="app.js?v=20261118-intro" defer></script>
 </body></html>

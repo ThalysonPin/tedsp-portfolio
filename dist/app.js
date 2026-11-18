@@ -462,6 +462,25 @@ function closeCase(){dialog.close();}
 document.getElementById('close-dialog').addEventListener('click',closeCase);
 dialog.addEventListener('close',()=>{document.body.classList.remove('dialog-open');document.querySelector(`[data-case="${dialog.dataset.projectId}"]`)?.focus();});
 dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeCase();}});
+// Existing CMS installations may predate the introduction labels.
+const filmLabels = {
+  en: {introVideo: 'My introduction in English', playVideo: 'Play video'},
+  pt: {introVideo: 'Minha apresentação em inglês', playVideo: 'Reproduzir vídeo'}
+};
+for (const lang of ['en', 'pt']) {
+  text[lang] = {...filmLabels[lang], ...text[lang]};
+}
+const film = document.querySelector('.intro-film video');
+const filmButton = document.querySelector('.film-play');
+filmButton.hidden = false;
+film.controls = false;
+filmButton.addEventListener('click', async () => {
+  film.controls = true;
+  filmButton.hidden = true;
+  film.focus();
+  try { await film.play(); }
+  catch { /* The native controls offer a retry if playback is interrupted. */ }
+});
 function setLanguage(lang){language=lang;document.documentElement.lang=lang==='pt'?'pt-BR':'en';document.title=(publicProfile?.name || 'Thalyson Emanuel')+' — '+text[lang].heroRole;document.querySelector('meta[name="description"]').content=text[lang].metaDescription;document.querySelectorAll('[data-i18n]').forEach(node=>node.innerHTML=text[lang][node.dataset.i18n]);document.querySelectorAll('[data-lang]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.lang===lang)));document.querySelectorAll('.resume-link').forEach(link=>link.href=publicProfile?.resume?.[lang] || `curriculo-thalyson-${lang}.pdf?v=${resumeVersion}`);document.getElementById('main-nav').setAttribute('aria-label',lang==='pt'?'Navegação principal':'Main navigation');document.getElementById('close-dialog').setAttribute('aria-label',lang==='pt'?'Fechar estudo de caso':'Close case study');document.querySelector('.metrics').setAttribute('aria-label',lang==='pt'?'Experiência em números':'Experience in numbers');document.querySelector('.language').setAttribute('aria-label',lang==='pt'?'Idioma':'Language');document.querySelector('.brand').setAttribute('aria-label',(publicProfile?.name || 'Thalyson Emanuel')+(lang==='pt'?', início':', home'));document.getElementById('copy-status').textContent='';renderJobs();renderProjects();renderSkills();renderIssueProjects();updateThemeButton();if(issueDialog.open)renderIssueContent(issueDialog.dataset.issueNumber);if(dialog.open)caseContent(dialog.dataset.projectId);try{localStorage.setItem('tedsp-language',lang);}catch{}}
 document.querySelectorAll('[data-lang]').forEach(button=>button.addEventListener('click',()=>setLanguage(button.dataset.lang)));
 const menuButton=document.querySelector('.menu-button');const nav=document.getElementById('main-nav');

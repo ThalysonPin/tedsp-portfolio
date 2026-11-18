@@ -87,6 +87,17 @@ class AdminServerTests(unittest.TestCase):
             self.csrf = data['csrf']
         return status, data, headers
 
+    def test_video_supports_playback_and_seeking(self):
+        (self.static / 'intro.mp4').write_bytes(b'0123456789')
+        status, body, headers = self.request('HEAD', '/intro.mp4')
+        self.assertEqual((status, body, headers['Content-Length'], headers['Accept-Ranges']), (200, b'', '10', 'bytes'))
+        for value, expected, content_range in [('2-5', b'2345', '2-5'), ('8-', b'89', '8-9'), ('-3', b'789', '7-9')]:
+            with self.subTest(value=value):
+                status, body, headers = self.request('GET', '/intro.mp4', headers={'Range': 'bytes=' + value})
+                self.assertEqual((status, body, headers['Content-Range']), (206, expected, 'bytes ' + content_range + '/10'))
+        status, _, headers = self.request('GET', '/intro.mp4', headers={'Range': 'bytes=12-'})
+        self.assertEqual((status, headers['Content-Range']), (416, 'bytes */10'))
+
     def test_initial_setup_needs_private_token_and_is_one_time(self):
         status, state, _ = self.request('GET', '/api/admin/session')
         self.assertEqual(status, 200)

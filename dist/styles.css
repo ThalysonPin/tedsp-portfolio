@@ -112,3 +112,84 @@
 @media(forced-colors:active){.brand-mark,.primary{background:ButtonFace;color:ButtonText}.theme-toggle svg{stroke:ButtonText}}
 
 @media(max-width:340px){.brand>span:last-child{display:none}}
+
+/* The introduction pairs an editorial nameplate with a landscape screening frame. */
+.header-inner { height: 78px; }
+.header { position: relative; z-index: 2; }
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr);
+  grid-template-areas: "heading film" "details film";
+  gap: 0 clamp(30px, 5vw, 80px);
+  padding-block: clamp(44px, 6vw, 86px);
+}
+.hero-heading { grid-area: heading; align-self: end; }
+.hero-details { grid-area: details; align-self: start; }
+.hero h1 { font-size: clamp(64px, 7.4vw, 108px); letter-spacing: -.075em; line-height: .93; font-weight: 650; }
+.hero h1 span { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-style: italic; letter-spacing: -.065em; }
+.hero-role { margin-top: 20px; font-size: clamp(18px, 1.45vw, 23px); }
+.hero-intro { margin-top: 10px; line-height: 1.65; }
+.eyebrow, .job-meta, .film-duration { font-family: var(--font-mono); }
+.hero .eyebrow { font-size: 10px; }
+.hero-actions { gap: 12px 18px; margin-top: 23px; }
+.hero-meta { margin-top: 20px; }
+.intro-film {
+  grid-area: film;
+  margin: 0;
+  min-width: 0;
+  padding: clamp(8px, 1.25vw, 18px) clamp(8px, 1.25vw, 18px) 0;
+  border-radius: 16px;
+  background: #0b1a33;
+  color: #f6f8ff;
+  border: 1px solid #304663;
+  box-shadow: 0 14px 32px -22px #0b204e90;
+}
+.film-screen { position: relative; aspect-ratio: 16 / 9; }
+.film-screen video { display: block; width: 100%; height: 100%; background: #060d17; border-radius: 8px; }
+.film-screen video:focus-visible { outline: 3px solid #a8caff; outline-offset: 2px; }
+.film-play {
+  position: absolute; inset: 0; display: grid; place-items: end start;
+  padding: clamp(12px, 2vw, 28px); border: 0; border-radius: 8px; cursor: pointer;
+  background: linear-gradient(24deg, #05102272, transparent 48%);
+}
+.film-play svg {
+  width: clamp(46px, 4.4vw, 64px); aspect-ratio: 1; padding: 15px;
+  border-radius: 50%; background: #f6f8ff; color: #10294e; fill: currentColor;
+  transition: transform .2s;
+}
+.film-play:hover svg { transform: scale(1.07); }
+.intro-film figcaption { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 4px 16px; font-size: 14px; font-weight: 550; }
+.film-duration { color: #bfd0ec; white-space: nowrap; font-size: 12px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.metrics { gap: 0; padding-block: 24px; }
+.metrics > div { padding-inline: clamp(14px, 2.5vw, 40px); }
+.metrics > div:first-child { padding-left: 0; }
+.metrics > div + div { border-left: 1px solid var(--border); }
+.metrics strong { color: var(--accent); font-variant-numeric: tabular-nums; }
+.section-heading h2 em, .issue-section-heading h3 em { font-family: Georgia, 'Times New Roman', serif; font-style: italic; }
+.job-meta span { font-family: var(--font); }
+.job { grid-template-columns: minmax(180px, .6fr) minmax(0, 1.4fr); }
+.tags span { border-radius: 20px; }
+#issue-project-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.issue-card { display: flex; flex-direction: column; }
+.issue-cover { aspect-ratio: 2.4; min-height: 0; padding: 15px; overflow: hidden; }
+.issue-cover img { height: 100%; }
+.issue-cover-text { justify-content: center; }
+.issue-cover-text > span + span { font-size: 52px; }
+.issue-card-body { flex: 1; }
+.issue-card .case-button { margin-top: auto; }
+.issue-card-body .tags { margin-bottom: 20px; }
+.contact-inner .portrait-frame { width: 72px; height: 72px; margin-bottom: 18px; border-radius: 50%; }
+@media (max-width: 760px) {
+  .header-inner { height: 68px; }
+  .hero { grid-template-columns: minmax(0, 1fr); grid-template-areas: "heading" "film" "details"; gap: 22px; padding-block: 30px 36px; }
+  .hero h1 { font-size: clamp(54px, 11vw, 80px); margin-top: 15px; }
+  .hero h1 br { display: none; }
+  .hero h1 span::before { content: ' '; }
+  .hero-role { margin-top: 12px; }
+  .hero-intro { margin: 0; }
+  .intro-film figcaption { padding: 10px 4px 11px; font-size: 13px; }
+  .metrics > div { padding-inline: 10px; }
+  .metrics > div:last-child { padding-right: 0; }
+  .job, #issue-project-list { grid-template-columns: 1fr; }
+}

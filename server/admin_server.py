@@ -510,9 +510,14 @@ def create_server(config=None, host='0.0.0.0', port=None):
         def respond(self, status, payload=b'', mime='application/json; charset=utf-8', extra=None):
             if not isinstance(payload, bytes):
                 payload = json.dumps(payload, ensure_ascii=True, allow_nan=False).encode()
+            self.response_headers(status, mime, len(payload), extra)
+            if self.command != 'HEAD':
+                self.wfile.write(payload)
+
+        def response_headers(self, status, mime, length, extra=None):
             self.send_response(status)
             self.send_header('Content-Type', mime)
-            self.send_header('Content-Length', str(len(payload)))
+            self.send_header('Content-Length', str(length))
             self.send_header('Cache-Control', 'no-store')
             self.send_header('X-Content-Type-Options', 'nosniff')
             self.send_header('Referrer-Policy', 'same-origin')
@@ -523,8 +528,6 @@ def create_server(config=None, host='0.0.0.0', port=None):
             for key, value in (extra or {}).items():
                 self.send_header(key, value)
             self.end_headers()
-            if self.command != 'HEAD':
-                self.wfile.write(payload)
 
         def request_origin(self):
             if self.headers.get('Origin') != config.public_origin:
@@ -580,9 +583,45 @@ def create_server(config=None, host='0.0.0.0', port=None):
         def cookie(self, token='', expire=False):
             return f'{COOKIE}={token}; Path=/; HttpOnly; SameSite=Strict; Max-Age={0 if expire else SESSION_SECONDS}' + ('; Secure' if config.secure else '')
 
+        def serve_video(self, path):
+            # Browser players request byte ranges for metadata and seeking.
+            with path.open('rb') as stream:
+                size = os.fstat(stream.fileno()).st_size
+                start, end = 0, size - 1
+                status = 200
+                headers = {'Accept-Ranges': 'bytes'}
+                value = self.headers.get('Range', '')
+                match = re.fullmatch(r'bytes=(\d{0,20})-(\d{0,20})', value)
+                if self.command == 'GET' and match and any(match.groups()):
+                    first, last = match.groups()
+                    if first:
+                        start = int(first)
+                        if last:
+                            end = min(int(last), end)
+                    else:
+                        start = max(0, size - int(last))
+                    if start > end:
+                        self.response_headers(416, 'video/mp4', 0, {'Content-Range': f'bytes */{size}', **headers})
+                        return
+                    status = 206
+                    headers['Content-Range'] = f'bytes {start}-{end}/{size}'
+                remaining = end - start + 1
+                self.response_headers(status, 'video/mp4', remaining, headers)
+                if self.command == 'HEAD':
+                    return
+                stream.seek(start)
+                while remaining:
+                    chunk = stream.read(min(128 * 1024, remaining))
+                    if not chunk:
+                        break
+                    self.wfile.write(chunk)
+                    remaining -= len(chunk)
+
         def serve_file(self, path, *, upload=False):
             if not path.is_file() or path.is_symlink():
                 raise APIError(404, 'Arquivo não encontrado.')
+            if path.suffix.lower() == '.mp4':
+                return self.serve_video(path)
             mime = mimetypes.guess_type(path.name)[0] or 'application/octet-stream'
             extra = {}
             if path.suffix.lower() == '.pdf':

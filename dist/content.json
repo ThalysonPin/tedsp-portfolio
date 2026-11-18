@@ -1,6 +1,8 @@
 {
   "text": {
     "pt": {
+      "introVideo": "Minha apresentação em inglês",
+      "playVideo": "Reproduzir vídeo",
       "issuesEyebrow": "DOCUMENTAÇÃO DE PROJETOS",
       "issuesTitle": "Projetos no <em>GitHub</em>",
       "issuesIntro": "Aqui explico o que construí, as ferramentas que escolhi e como cada projeto funciona.",
@@ -64,6 +66,8 @@
       "metaDescription": "Thalyson Emanuel: desenvolvimento de IA aplicada, automações com n8n e integração de sistemas. Experiência, projetos e contato."
     },
     "en": {
+      "introVideo": "My introduction in English",
+      "playVideo": "Play video",
       "issuesEyebrow": "PROJECT DOCUMENTATION",
       "issuesTitle": "Projects on <em>GitHub</em>",
       "issuesIntro": "Here I explain what I built, the tools I chose, and how each project works.",
